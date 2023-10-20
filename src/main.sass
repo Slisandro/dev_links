@@ -1,0 +1,179 @@
+// variables
+
+$blue-primary: #633CFF
+$blue-secondary: #BEADFF
+$blue-ternary: #EFEBFF
+
+$black: #333333
+
+$gray-primary: #737373
+$gray-secondary: #D9D9D9
+$gray-ternary: #FAFAFA
+
+$white: #FFFFFF
+
+$red: #FF3939
+
+$font-instrument: 'Instrument Sans', sans-serif
+
+$shadow: 0px 0px 32px 0px $blue-primary
+
+.App 
+    display: flex
+    flex-direction: column
+    gap: 25px
+
+// components
+
+.textfield 
+    border: 1px solid $gray-secondary
+    border-radius: 4px
+    font-family: $font-instrument
+    font-size: 16px
+    line-height: 24px
+    color: $black
+    width: 480px
+    box-sizing: border-box
+    transition: border-color 0.2s ease-in-out
+    border-radius: 8px
+    border: 1px solid $gray-secondary
+    background: $white
+    display: flex
+    padding: 12px 16px
+    align-items: center
+    gap: 12px
+    align-self: stretch
+
+    &:active 
+        box-shadow: $shadow
+
+    &:focus 
+        border-color: $blue-primary
+    
+    input 
+        color: $black
+        border: none
+        height: 100%
+        font-family: $font-instrument
+        font-size: 16px
+        line-height: 150%
+        outline: none
+
+    span 
+        color: $red
+
+.button 
+    display: flex
+    width: 230px
+    padding: 11px 27px
+    border: none
+    border-radius: 8px
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 8px
+    background-color: $blue-primary
+    color: $white
+    font-family: $font-instrument
+    font-weight: 600
+    font-size: 16px
+
+    &:active
+        background-color: $blue-secondary
+        box-shadow: $shadow
+    
+    &:disabled 
+        background-color: $blue-ternary
+        opacity: 0.25
+
+.button.outline
+    background-color: transparent
+    color: $blue-primary
+    border: 1px solid $blue-primary
+
+    &:active
+        background-color: $blue-ternary
+        color: $blue-secondary
+
+    &:disabled 
+        opacity: 0.25
+
+.tab 
+    display: flex
+    padding: 11px 27px
+    align-items: center
+    width: max-content
+    gap: 8px
+    font-family: $font-instrument
+    color: $gray-primary
+    font-weight: 600
+    border-radius: 8px
+    line-height: 150%   
+    
+    &:active 
+        background-color: $blue-ternary
+        color: $blue-primary
+        svg 
+            color: $blue-primary
+
+    &:hover
+        color: $blue-primary
+        svg 
+            color: $blue-primary
+
+    svg 
+        color: $gray-primary
+
+.dropdown 
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 8px
+    width: 480px
+
+    .selected 
+        display: flex
+        width: 100%
+        padding: 12px 16px
+        align-items: center
+        gap: 12px
+        background-color: $white
+        border: 1px solid $blue-primary
+        border-radius: 8px
+
+        &:active
+            box-shadow: $shadow
+
+    span 
+        width: 90%
+        font-family: $font-instrument
+        text-align: start
+        font-size: 16px
+        font-weight: 400
+        line-height: 150%
+
+    .options
+        display: flex
+        width: 100%
+        flex-direction: column
+        justify-content: center
+        align-items: flex-start
+        gap: 12px
+        padding-top: 8px
+        padding-bottom: 8px
+        border-radius: 8px
+        border: 1px solid $gray-secondary
+
+        .option 
+            display: flex
+            align-items: center
+            gap: 12px
+            font-family: $font-instrument
+            width: 100%
+            padding: 8px 16px
+            background-color: transparent
+            border: none
+            font-size: 16px
+            font-weight: 400
+            line-height: 150%
+            
