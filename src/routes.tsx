@@ -4,6 +4,7 @@ import LoginLayout from './layouts/login-layout';
 import RegisterLayout from './layouts/register-layout';
 
 import useIsAuthenticatedHook from './hooks/is-authenticated-hook';
+import EditLinksLayout from './layouts/edit-links-layout';
 
 const PrivateRoute = () => {
     const { authentication } = useIsAuthenticatedHook();
@@ -13,12 +14,14 @@ const PrivateRoute = () => {
 function AllRoutes() {
     return (
         <Routes>
-            <Route exact path='/' element={<PrivateRoute />}>
-                <Route exact path='/' element={<>Hola</>} />
+            <Route path='/'
+                element={<EditLinksLayout />}
+            />
+            <Route path='/' element={<PrivateRoute />}>
+                <Route path='/' element={<EditLinksLayout />} />
             </Route>
-            <Route exact path='/register' element={<RegisterLayout />} />
-            <Route exact path='/login' element={<LoginLayout />} />
-
+            <Route path='/register' element={<RegisterLayout />} />
+            <Route path='/login' element={<LoginLayout />} />
         </Routes>
     );
 }
