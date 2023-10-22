@@ -20,6 +20,7 @@ $shadow: 0px 0px 32px 0px $blue-primary
 
 body 
     margin: 0
+    font-family: $font-instrument
 
 
 .App 
@@ -399,3 +400,112 @@ body
 
             a 
                 color: $blue-primary
+
+
+.navbar 
+    display: flex
+    justify-content: space-between
+    width: calc(100% - 50px)
+    padding: 16px 24px
+    border-radius: 8px
+    background-color: $white
+
+    .logo 
+        display: flex
+        align-items: center
+        gap: 10px
+        padding-left: 20px
+
+    .actions 
+        display: flex
+        align-items: center
+        gap: 10px
+
+        button
+            width: max-content
+            color: $blue-primary
+            display: flex
+            align-items: center
+            flex-direction: row
+            background-color: transparent
+            font-size: 16px 
+            font-weight: 600
+            color: $gray-primary
+            padding: 11px 27px
+
+        .selected 
+            color: $blue-primary
+            background-color: $blue-ternary
+
+    .preview 
+        width: max-content
+        font-size: 16px
+        padding-right: 20px
+
+        button
+            padding: 11px 27px
+
+
+.edit-links 
+    display: flex
+    height: 100%
+    width: 55%
+    flex-direction: column
+    align-items: flex-start
+    gap: 40px
+    background: $white
+    padding: 0 40px
+    border-radius: 12px
+
+    .header 
+        display: flex
+        flex-direction: column
+        gap: 8px
+        padding-top: 20px
+
+        h2 
+            color: $black
+            font-size: 32px
+            font-weight: 700
+            line-weight: 150%
+            margin: 0
+
+        h4 
+            color: $gray-primary
+            font-size: 16px
+            font-weight: 400
+            line-weight: 150%
+            margin: 0
+
+    .links 
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        gap: 15px
+
+        h2 
+            color: $black
+            font-size: 32px
+            font-weight: 700
+            line-weight: 150%
+            margin: 0
+            text-align: center
+
+        p 
+            color: $black
+            font-size: 16px
+            font-weight: 400
+            line-weight: 150%
+            margin: 0
+            text-align: center
+
+    .actions
+        width: 100%
+        display: flex
+        justify-content: flex-end
+        padding-bottom: 15px
+
+        button
+            width: max-content
