@@ -1,14 +1,17 @@
+import { SVGProps } from 'react';
+
 interface ButtonProps {
     label: string
     disabled: boolean
     type: 'default' | 'outline'
-    icon?: SVGElement
+    icon?: React.ReactElement<SVGProps<SVGSVGElement>>
     className?: string
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function ButtonComponent({
     label,
-    icon,
+    icon = <svg width="0" height="0" style={{ display: "none" }}></svg>,
     disabled = false,
     type = 'default',
     className

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 function useIsAuthenticatedHook() {
-    const [authentication, setAuthentication] = useState<boolean>(false);
+    const [authentication, setAuthentication] = useState<boolean>(true);
 
     return {
         authentication

@@ -1,12 +1,20 @@
+import { useSelector } from 'react-redux';
+import { UserProfileState } from "../redux/reducers/user-profile-reducers";
+import { useEffect } from 'react';
+
 interface User {
     image: string
     name: string
-    subtitle: string
+    lastname: string
+    email: string
     links: { name: string, url: string }[]
 }
 
+function PreviewPhoneProfileComponent() {
+    const { name, lastname, email, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
 
-function PreviewPhoneProfileComponent({ image, name, subtitle, links }: User) {
+    useEffect(() => {}, [name, lastname, email, image])
+
     return (
         <svg style={{ zoom: .8 }} width="308" height="632" viewBox="0 0 308 632" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 54.5C1 24.9528 24.9528 1 54.5 1H253.5C283.047 1 307 24.9528 307 54.5V577.5C307 607.047 283.047 631 253.5 631H54.5C24.9528 631 1 607.047 1 577.5V54.5Z" stroke="#737373" />
@@ -17,8 +25,8 @@ function PreviewPhoneProfileComponent({ image, name, subtitle, links }: User) {
                 </clipPath>
             </defs>
             <Image href={image} />
-            <Name name={name} />
-            <Subtitle subtitle={subtitle} />
+            <Name name={name + " " + lastname ?? undefined} />
+            <Email email={email} />
             <rect
                 x="30"
                 y="245"
@@ -41,7 +49,7 @@ function PreviewPhoneProfileComponent({ image, name, subtitle, links }: User) {
     )
 };
 
-const Image = ({ href }: { href: string }) => href ?
+const Image = ({ href }: { href?: string }) => href ?
     <image
         href={href}
         width="96"
@@ -57,13 +65,12 @@ const Image = ({ href }: { href: string }) => href ?
         fill="#EEEEEE"
     />;
 
-const Name = ({ name }: { name: string }) => name ?
+const Name = ({ name }: { name?: string }) => name ?
     <text
         x="153.5"
         y="195"
         textAnchor="middle"
         fontSize="18"
-        fill="#1A1A1A"
         fontFamily="Instrument Sans"
         fontWeight={600}
         fill="#333"
@@ -79,18 +86,17 @@ const Name = ({ name }: { name: string }) => name ?
         fill="#EEEEEE"
     />;
 
-const Subtitle = ({ subtitle }: { subtitle: string }) => subtitle ?
+const Email = ({ email }: { email?: string }) => email ?
     <text
         x="153.5"
         y="230"
         textAnchor="middle"
         fontSize="16"
-        fill="#1A1A1A"
         fontFamily="Instrument Sans"
         fontWeight={400}
         fill="#333"
     >
-        {subtitle}
+        {email}
     </text>
     : <rect
         x="117.5"

@@ -1,9 +1,26 @@
-import { ChangeEvent } from "react"
-import ButtonComponent from "./button-component"
-import ImageUploadComponent from "./image-upload-component"
-import TextFieldComponent from "./textfield-component"
+import { ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { UserProfileState, setEmail, setLastname, setName } from "../redux/reducers/user-profile-reducers";
+import ButtonComponent from "./button-component";
+import ImageUploadComponent from "./image-upload-component";
+import TextFieldComponent from "./textfield-component";
 
 function EditPersonalDataComponent() {
+    const dispatch = useDispatch();
+    const { name, lastname, email }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+
+    const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+        return dispatch(setName(e.target.value))
+    }
+
+    const onChangeLastName = (e: ChangeEvent<HTMLInputElement>) => {
+        return dispatch(setLastname(e.target.value))
+    }
+
+    const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+        return dispatch(setEmail(e.target.value))
+    }
+
     return (
         <div className="edit-personal-data">
             <div className="header">
@@ -19,36 +36,28 @@ function EditPersonalDataComponent() {
                     <label>First Name *</label>
                     <TextFieldComponent
                         placeholder={"e.g. John"}
-                        value={""}
-                        onChange={function (e: ChangeEvent<HTMLInputElement>): void {
-                            throw new Error("Function not implemented.")
-                        }}
+                        value={name}
+                        onChange={onChangeName}
                         type={"default"}
-                        icon={<svg width="0" height="0" viewBox="0 0 16 16" fill="none"></svg>}
                     />
                 </div>
                 <div className="container-input">
                     <label>Last Name *</label>
                     <TextFieldComponent
                         placeholder={"e.g. Smith"}
-                        value={""}
-                        onChange={function (e: ChangeEvent<HTMLInputElement>): void {
-                            throw new Error("Function not implemented.")
-                        }}
+                        value={lastname}
+                        onChange={onChangeLastName}
                         type={"default"}
-                        icon={<svg width="0" height="0" viewBox="0 0 16 16" fill="none"></svg>}
+                        // icon={<svg width="0" height="0" viewBox="0 0 16 16" fill="none"></svg>}
                     />
                 </div>
                 <div className="container-input">
                     <label>Email</label>
                     <TextFieldComponent
                         placeholder={"e.g. email@example.com"}
-                        value={""}
-                        onChange={function (e: ChangeEvent<HTMLInputElement>): void {
-                            throw new Error("Function not implemented.")
-                        }}
+                        value={email}
+                        onChange={onChangeEmail}
                         type={"default"}
-                        icon={<svg width="0" height="0" viewBox="0 0 16 16" fill="none"></svg>}
                     />
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, SVGProps } from 'react';
 import ArrowBottomIcon from '../icons/arrow-bottom-icon';
 import ArrowTopIcon from '../icons/arrow-top-icon';
 import LinkIcon from '../icons/link-icon';
@@ -6,7 +6,7 @@ import LinkIcon from '../icons/link-icon';
 interface Item {
     id: string,
     label: string,
-    icon: Element // React.ReactElement<SVGElement>|Element
+    icon: React.ReactElement<SVGProps<SVGSVGElement>> // React.ReactElement<SVGElement>|Element
 }
 
 interface DropdownProps {
@@ -24,7 +24,10 @@ const ITEM_DEFAULT: Item = {
 function DropdownComponent({ options, selected = ITEM_DEFAULT }: DropdownProps) {
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen(!open);
-    const handleSelect = (event: React.ChangeEvent<HTMLButtonElement>) => setOpen(false);
+    const handleSelect = (event: React.ChangeEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setOpen(false)
+    };
 
     return (
         <div className="dropdown">
@@ -40,6 +43,7 @@ const Options = (
 ) => (
     <div className="options">
         {options.map(op => (
+            // @ts-expect-error
             <button className="option" key={op?.id ?? op} onClick={handleSelect}>
                 {op?.icon}
                 {op?.label ?? op}
