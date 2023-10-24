@@ -4,7 +4,7 @@ interface TextField {
     placeholder: string
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    type: 'default' | 'active' | 'error',
+    type?: 'default' | 'active' | 'error',
     error?: string,
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>
 }
@@ -20,7 +20,7 @@ interface TextField {
 
 function TextFieldComponent({
     icon,
-    type,
+    type = "default",
     error,
     ...props
 }: TextField) {
