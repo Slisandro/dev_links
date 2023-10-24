@@ -1,14 +1,29 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import ButtonComponent from '../components/button-component'
 import TextFieldComponent from '../components/textfield-component'
 import { loginServicie } from '../servicies/authentication';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/reducers/authentication';
 
 function LoginLayout() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // @ts-expect-error
+    const UserLogged = useSelector(s => s.userLoggedReducers)
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleLogin = async () => await loginServicie({ username, password });
+    const handleLogin = async () => {
+        const response = await loginServicie({ username, password });
+
+        if (response.token) {
+            dispatch(login({ ...response, state: "authenticated" }));
+            setTimeout(() => {
+                navigate("/")
+            }, 500);
+        }
+    };
 
     return (
         <section className="login-container">
@@ -57,7 +72,7 @@ function LoginLayout() {
                         />
                     </div>
 
-                    <ButtonComponent label="Login" onClick={handleLogin} />
+                    <ButtonComponent label="Login" onClick={handleLogin} disabled={false} />
 
                     <p className="register">Don't have account? <NavLink to="/register">Create account</NavLink></p>
                 </div>

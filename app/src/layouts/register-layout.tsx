@@ -1,15 +1,27 @@
 import { useState } from 'react';
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import ButtonComponent from "../components/button-component"
 import TextFieldComponent from "../components/textfield-component"
 import { registerServicie } from "../servicies/authentication"
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/reducers/authentication';
 
 function RegisterLayout() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [repeatPassword, setRepeatPassword] = useState<string>("");
 
-    const handleRegister = async () => await registerServicie({ username: email, password });
+    const handleRegister = async () => {
+        const response = await registerServicie({ username: email, password });
+        if (response.token) {
+            dispatch(login({ ...response, state: "authenticated" }));
+            setTimeout(() => {
+                navigate("/")
+            }, 500);
+        }
+    };
 
     return (
         <section className="register-container">
@@ -72,7 +84,7 @@ function RegisterLayout() {
 
                     <p>Password must contains at least 8 characters</p>
 
-                    <ButtonComponent label="Create new account" onClick={handleRegister} />
+                    <ButtonComponent label="Create new account" onClick={handleRegister} disabled={false} />
 
                     <p className="login">Already have an account? <NavLink to="/login">Login</NavLink></p>
                 </div>
