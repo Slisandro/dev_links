@@ -14,10 +14,11 @@ function ButtonComponent({
     icon = <svg width="0" height="0" style={{ display: "none" }}></svg>,
     disabled = false,
     type = 'default',
-    className
+    className,
+    onClick
 }: ButtonProps) {
     return (
-        <button className={`button ${type} ${className}`} disabled={disabled}>
+        <button className={`button ${type} ${className}`} disabled={disabled} onClick={onClick}>
             {icon}
             {label}
         </button>
