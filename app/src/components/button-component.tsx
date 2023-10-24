@@ -3,7 +3,7 @@ import { SVGProps } from 'react';
 interface ButtonProps {
     label: string
     disabled: boolean
-    type: 'default' | 'outline'
+    type?: 'default' | 'outline'
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>
     className?: string
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
