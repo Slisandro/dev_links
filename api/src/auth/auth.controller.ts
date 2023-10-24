@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { User } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
@@ -17,22 +17,28 @@ export class AuthController {
     async hiddenInformation() {
         return "hidden information";
     }
-    @Get("/anyone")
-    async publicInformation() {
-        return "this can be seen by anyone";
-    }
 
     @Post('register')
     async register(@Body() newUser: User) {
-        const user = await this.userService.create(newUser);
+        const alreadyExist = await this.userService.findOne(newUser.username);
 
+        if(alreadyExist) {
+            throw new BadRequestException("User already exists");
+        }
+        
+        const user = await this.userService.create(newUser);
         const response = await this.authService.sign(user);
+
         return response;
     }
 
     @Post('login')
     async login(@Body() payload: { username: string, password: string }) {
         const user = await this.userService.findOne(payload.username);
+
+        if(!user) {
+            throw new BadRequestException("User does not exist");
+        }
 
         if (user) {
             const response = await this.authService.sign(user);
