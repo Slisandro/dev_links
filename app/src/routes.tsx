@@ -19,6 +19,9 @@ function AllRoutes() {
                 element={<EditLinksLayout />}
             />
             <Route path='/' element={<PrivateRoute />}>
+                <Route path='/home'
+                    element={<EditLinksLayout />}
+                />
                 <Route path='/edit/links' element={<EditLinksLayout />} />
                 <Route path='/edit/profile' element={<EditPersonalDataLayout />} />
             </Route>
