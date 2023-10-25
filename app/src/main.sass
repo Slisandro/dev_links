@@ -51,6 +51,7 @@ body
     align-items: center
     gap: 12px
     align-self: stretch
+    max-width: 100%
 
     &:active 
         box-shadow: $shadow
@@ -58,6 +59,7 @@ body
     &:focus 
         border-color: $blue-primary
     
+
     input 
         color: $black
         border: none
@@ -69,6 +71,16 @@ body
 
     span 
         color: $red
+        margin-left: auto
+        font-size: small
+        position: absolute
+        right: 5px
+        left: auto
+
+.textfield.error 
+    position: relative
+    border: 1px solid $red !important
+    max-width: 100%
 
 .button 
     display: flex
@@ -310,6 +322,9 @@ body
                     font-weight: 400
                     line-height: 150%
                     color: $black
+
+                input 
+                    width: 100%
 
         .register 
             text-align: center
