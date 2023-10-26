@@ -13,7 +13,7 @@ interface User {
 function PreviewPhoneProfileComponent() {
     const { name, lastname, email, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
 
-    useEffect(() => {}, [name, lastname, email, image])
+    useEffect(() => { }, [name, lastname, email, image])
 
     return (
         <svg style={{ zoom: .8 }} width="308" height="632" viewBox="0 0 308 632" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +25,7 @@ function PreviewPhoneProfileComponent() {
                 </clipPath>
             </defs>
             <Image href={image} />
-            <Name name={name + " " + lastname ?? undefined} />
+            <Name name={name} lastname={lastname} />
             <Email email={email} />
             <rect
                 x="30"
@@ -65,26 +65,32 @@ const Image = ({ href }: { href?: string }) => href ?
         fill="#EEEEEE"
     />;
 
-const Name = ({ name }: { name?: string }) => name ?
-    <text
-        x="153.5"
-        y="195"
-        textAnchor="middle"
-        fontSize="18"
-        fontFamily="Instrument Sans"
-        fontWeight={600}
-        fill="#333"
-    >
-        {name}
-    </text>
-    : <rect
-        x="73.5"
-        y="185"
-        width="160"
-        height="16"
-        rx="8"
-        fill="#EEEEEE"
-    />;
+const Name = ({ name, lastname }: { name: string, lastname: string }) => {
+    const fullName = name || lastname ? name.concat(" ", lastname) : "";
+    useEffect(() => { }, [name, lastname])
+    return (
+        fullName ?
+            <text
+                x="153.5"
+                y="195"
+                textAnchor="middle"
+                fontSize="18"
+                fontFamily="Instrument Sans"
+                fontWeight={600}
+                fill="#333"
+            >
+                {fullName}
+            </text>
+            : <rect
+                x="73.5"
+                y="185"
+                width="160"
+                height="16"
+                rx="8"
+                fill="#EEEEEE"
+            />
+    );
+}
 
 const Email = ({ email }: { email?: string }) => email ?
     <text
