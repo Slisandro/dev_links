@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import { User } from '../users/users.entity';
+import { Users } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class AuthService {
 
     constructor(private usersService: UsersService) { }
 
-    async sign(payload: User) {
+    async sign(payload: Users) {
         const user = await this.usersService.findOne(payload.username);
         const comparePassword = payload.password === user.password;
 
@@ -31,7 +31,7 @@ export class AuthService {
         return null;
     }
 
-    async validateUser(payload: User) {
+    async validateUser(payload: Users) {
         return await this.usersService.findOne(payload.username);
     }
 }
