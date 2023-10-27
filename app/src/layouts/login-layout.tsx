@@ -1,10 +1,28 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import ButtonComponent from '../components/button-component';
 import TextFieldComponent from '../components/textfield-component';
 import useFormikLoginHook from '../hooks/use-formik-login-hook';
+import { useDispatch } from 'react-redux';
+import { loginServicie } from '../servicies/authentication';
+import { login } from '../redux/reducers/authentication';
+import { setProfile } from '../redux/reducers/user-profile-reducers';
 
 function LoginLayout() {
-    const { handleChange, values, errors, handleSubmit } = useFormikLoginHook();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { handleChange, values, errors } = useFormikLoginHook();
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const response = await loginServicie(values);
+        if (response.token) {
+            dispatch(login({ ...response, state: "authenticated" }))
+            dispatch(setProfile(response.profile))
+            setTimeout(() => {
+                navigate("/")
+            }, 500);
+        }
+    }
 
     return (
         <section className="login-container">
