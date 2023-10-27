@@ -6,14 +6,14 @@ interface User {
     image: string
     name: string
     lastname: string
-    email: string
+    username: string
     links: { name: string, url: string }[]
 }
 
 function PreviewPhoneProfileComponent() {
-    const { name, lastname, email, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+    const { name, lastname, username, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
 
-    useEffect(() => { }, [name, lastname, email, image])
+    useEffect(() => { }, [name, lastname, username, image])
 
     return (
         <svg style={{ zoom: .8 }} width="308" height="632" viewBox="0 0 308 632" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ function PreviewPhoneProfileComponent() {
             </defs>
             <Image href={image} />
             <Name name={name} lastname={lastname} />
-            <Email email={email} />
+            <Email username={username} />
             <rect
                 x="30"
                 y="245"
@@ -92,7 +92,7 @@ const Name = ({ name, lastname }: { name: string, lastname: string }) => {
     );
 }
 
-const Email = ({ email }: { email?: string }) => email ?
+const Email = ({ username }: { username?: string }) => username ?
     <text
         x="153.5"
         y="230"
@@ -102,7 +102,7 @@ const Email = ({ email }: { email?: string }) => email ?
         fontWeight={400}
         fill="#333"
     >
-        {email}
+        {username}
     </text>
     : <rect
         x="117.5"
