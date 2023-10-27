@@ -22,8 +22,8 @@ function AllRoutes() {
                 <Route path='/home'
                     element={<EditLinksLayout />}
                 />
-                <Route path='/edit/links' element={<EditLinksLayout />} />
-                <Route path='/edit/profile' element={<EditPersonalDataLayout />} />
+                <Route path='/links' element={<EditLinksLayout />} />
+                <Route path='/profile' element={<EditPersonalDataLayout />} />
             </Route>
             <Route path='/register' element={<RegisterLayout />} />
             <Route path='/login' element={<LoginLayout />} />
