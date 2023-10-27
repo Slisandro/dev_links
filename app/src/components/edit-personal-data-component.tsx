@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import useFormikProfileHook from "../hooks/use-formik-profile-hook";
-import { UserProfileState, setEmail, setLastname, setName } from "../redux/reducers/user-profile-reducers";
+import { UserProfileState, setUsername, setLastname, setName } from "../redux/reducers/user-profile-reducers";
 import { updateProfile } from "../servicies/profile";
 import ButtonComponent from "./button-component";
 import ImageUploadComponent from "./image-upload-component";
@@ -8,21 +8,21 @@ import TextFieldComponent from "./textfield-component";
 
 function EditPersonalDataComponent() {
     const dispatch = useDispatch();
-    const { name, lastname, email }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
-    const { errors, values, handleChange } = useFormikProfileHook({name, lastname, email});
+    const { name, lastname, username, image, file }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+    const { errors, values, handleChange } = useFormikProfileHook({ name, lastname, username });
 
     const handleSubmit = async (e: any) => {
-        const response = await updateProfile(values);
-        if (response.token) {
-            dispatch(setName(e.target.value));
-            dispatch(setLastname(e.target.value));
-            dispatch(setEmail(e.target.value));
-        };
-
+        e.preventDefault();
+        const response = await updateProfile({ ...values, image, file });
+        // if (response) {
+        //     dispatch(setName(response.name));
+        //     dispatch(setLastname(response.lastname));
+        //     dispatch(setUsername(response.username));
+        // };
     }
 
     return (
-        <div className="edit-personal-data">
+        <form className="edit-personal-data" onSubmit={handleSubmit}>
             <div className="header">
                 <h2>Profile Details</h2>
                 <h4>Add your details to create a personal touch to your profile.</h4>
@@ -60,20 +60,19 @@ function EditPersonalDataComponent() {
                 <div className="container-input">
                     <label>Email</label>
                     <TextFieldComponent
-                        id={"email"}
-                        name={"email"}
-                        error={errors.email}
+                        id={"username"}
+                        name={"username"}
                         placeholder={"e.g. email@example.com"}
-                        value={values.email}
+                        value={values.username}
                         onChange={handleChange}
                         type={"default"}
                     />
                 </div>
             </div>
             <div className="actions">
-                <ButtonComponent onClick={handleSubmit} label="Save" type="outline" disabled={!!errors.name || !!errors.lastname || !!errors.email} />
+                <ButtonComponent buttonType="submit" label="Save" type="outline" disabled={!!errors.name || !!errors.lastname || !!errors.username} />
             </div>
-        </div>
+        </form>
     )
 }
 

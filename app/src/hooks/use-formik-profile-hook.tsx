@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 interface Errors {
     name: string
     lastname: string
-    email: string
+    username: string
 }
 
 const initialErrors = {
     name: '',
     lastname: '',
-    email: ''
+    username: ''
 }
 
 function useFormikProfileHook(entity: Errors) {
@@ -17,18 +17,18 @@ function useFormikProfileHook(entity: Errors) {
         initialValues: {
             name: entity.name || '',
             lastname: entity.lastname || '',
-            email: entity.email || ''
+            username: entity.username || ''
         },
         initialErrors: initialErrors,
         async onSubmit() { },
         validate(values) {
             let errors: Errors = initialErrors;
 
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid';
-            } else errors.email = ""
+            if (!values.username) {
+                errors.username = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
+                errors.username = 'Invalid';
+            } else errors.username = ""
 
             if (!values.name) {
                 errors.name = 'Required';

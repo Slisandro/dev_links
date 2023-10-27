@@ -27,8 +27,8 @@ const userLoggedSlice = createSlice({
             state.state = "authenticated"
             state.token = action.payload.token
         },
-        logout: (state, action) => {
-            state = { ...action.payload, state: "not authenticated" };
+        logout: (state) => {
+            state.state = "not authenticated"
         },
     },
 });
