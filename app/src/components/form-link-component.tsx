@@ -1,0 +1,60 @@
+import { useDispatch } from 'react-redux';
+import useFormikLinkHook from '../hooks/use-formik-link-hook';
+import { Link, setAddLink, setEditLink } from '../redux/reducers/links-reducers';
+import ButtonComponent from './button-component';
+import DropdownComponent from './dropdown-component';
+import TextFieldComponent from './textfield-component';
+import technologies, { TechnologiesLabel } from '../constants/technologies-constants';
+
+function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal: () => void }) {
+    const dispatch = useDispatch();
+    const { values, errors, handleChange, setFieldValue } = useFormikLinkHook(entity);
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        if(entity) {
+            dispatch(setEditLink(values))
+        } else {
+            dispatch(setAddLink(values))
+        }
+        toggleModal();
+    };
+
+    const handleCancel = () => toggleModal();
+
+    const handleDropdownChange = (value: TechnologiesLabel) =>
+        // setFieldValue is a formik function to set the value of a field
+        setFieldValue("type", value)
+
+    return (
+        <>
+            <h2>
+                {entity ? "Edit Link" : "Create Link"}
+            </h2>
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                <DropdownComponent
+                    id="type"
+                    name="type"
+                    error={errors.type}
+                    value={values.type}
+                    options={technologies}
+                    onChange={handleDropdownChange}
+                    disabled={entity ? true : false}
+                />
+                <TextFieldComponent
+                    id="url"
+                    name="url"
+                    error={errors.url}
+                    placeholder="https://"
+                    value={values.url}
+                    onChange={handleChange}
+                />
+                <div className="actions" style={{ gap: "15px", marginTop: "10px", paddingBottom: 0 }}>
+                    <ButtonComponent onClick={handleCancel} label={'Cancel'} type="outline" disabled={false} />
+                    <ButtonComponent buttonType="submit" label={'Save'} type="default" disabled={false} />
+                </div>
+            </form>
+        </>
+    )
+}
+
+export default FormLinkComponent;
