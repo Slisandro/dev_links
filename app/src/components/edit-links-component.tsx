@@ -1,15 +1,57 @@
+import React from 'react';
+import { useSelector } from "react-redux";
+import useCustomModal from '../hooks/use-modal-add-link-hook';
+import { Link } from "../redux/reducers/links-reducers";
 import ButtonComponent from "./button-component";
+import FormLinkComponent from './form-link-component';
 import ListDraggableComponent from "./list-draggable-component";
+import ModalComponent from './modal-component';
 
 function EditLinksComponent() {
+  const links = useSelector((state: { links: Link[] }) => state.links);
+  const { modalState, toggleModal } = useCustomModal(false);
+  const handleModalAddLink = (e: any) => {
+    e.preventDefault();
+    toggleModal()
+  };
+
+  React.useEffect(() => {}, [links])
+
   return (
-    <div className="edit-links not-empty">
+    <div className={`edit-links ${links.length ? "not-empty" : "empty"}`}>
+      {modalState && (
+        <ModalComponent open={modalState}>
+          <FormLinkComponent toggleModal={toggleModal} />
+        </ModalComponent>
+      )}
       <div className="header">
         <h2>Customize your links</h2>
         <h4>Add/edit/remove links below and then share all your profiles with the world!</h4>
       </div>
-      <ButtonComponent label={"+ Add new link"} type="outline" disabled={false} />
-      {/* <div className="links">
+      <form onSubmit={handleModalAddLink}>
+        <ButtonComponent
+          buttonType={"submit"}
+          label={"+ Add new link"}
+          type="outline"
+          disabled={false}
+        />
+      </form>
+      <LinksContent />
+      <div className="actions">
+        <ButtonComponent label="Save" type="outline" disabled={true} />
+      </div>
+    </div>
+  )
+}
+
+const LinksContent = () => {
+  const links = useSelector((state: { links: Link[] }) => state.links);
+
+  React.useEffect(() => { }, [links]);
+
+  if (!links.length) {
+    return (
+      <div className="links">
         <svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 250 161" fill="none">
           <path opacity="0.3" d="M48.6936 15.4213C23.3786 25.2238 4.59362 50.0679 0.857884 80.1285C-2.26282 105.459 5.19347 133.446 49.0884 141.419C134.494 156.939 222.534 158.754 242.952 116.894C263.369 75.0336 235.427 8.00293 192.079 3.36363C157.683 -0.326546 98.1465 -3.7206 48.6936 15.4213Z" fill="white" />
           <path d="M157.022 9.56714H93.044C89.0309 9.56714 85.7776 12.8204 85.7776 16.8336V137.744C85.7776 141.757 89.0309 145.01 93.044 145.01H157.022C161.036 145.01 164.289 141.757 164.289 137.744V16.8336C164.289 12.8204 161.036 9.56714 157.022 9.56714Z" fill="#333333" />
@@ -51,12 +93,12 @@ function EditLinksComponent() {
         </svg>
         <h2>Let’s get you started</h2>
         <p>Use the “Add new link” button to get started. Once you have more than one link, you can reorder and edit them. We’re here to help you share your profiles with everyone!</p>
-      </div> */}
-      <ListDraggableComponent />
-      <div className="actions">
-        <ButtonComponent label="Save" type="outline" disabled={true} />
       </div>
-    </div>
+    )
+  }
+
+  return (
+    <ListDraggableComponent />
   )
 }
 

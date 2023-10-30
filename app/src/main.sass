@@ -31,6 +31,27 @@ body
     align-items: center
     justify-content: center
 
+/* Estilos para la barra de desplazamiento */
+::-webkit-scrollbar 
+  width: 10px /* Ancho de la barra de desplazamiento */
+
+
+/* Estilos para el track (fondo) de la barra de desplazamiento */
+::-webkit-scrollbar-track 
+  background-color: $gray-ternary /* Color de fondo del track */
+
+
+/* Estilos para el thumb (manija) de la barra de desplazamiento */
+::-webkit-scrollbar-thumb 
+  background-color: $gray-secondary /* Color de fondo del thumb */
+  border-radius: 5px /* Radio de borde del thumb */
+
+
+/* Estilos para el thumb cuando se está arrastrando */
+::-webkit-scrollbar-thumb:hover 
+  background-color: $gray-primary /* Color de fondo del thumb al pasar el mouse sobre él */
+
+
 // components
 
 .textfield 
@@ -150,6 +171,7 @@ body
     align-items: flex-start
     gap: 8px
     width: 480px
+    position: relative
 
     .selected 
         display: flex
@@ -173,15 +195,20 @@ body
         line-height: 150%
 
     .options
+        position: absolute
+        top: 115%
+        background: $white
         display: flex
         width: 100%
         flex-direction: column
-        justify-content: center
-        align-items: flex-start
+        justify-content: flex-start
+        align-items: center
         gap: 12px
+        max-height: 125px
+        overflow-y: auto
         padding-top: 8px
         padding-bottom: 8px
-        border-radius: 8px
+        border-radius: 8px  
         border: 1px solid $gray-secondary
 
         .option 
@@ -670,3 +697,29 @@ body
             font-style: normal
             font-weight: 400
             line-height: 150%
+
+.modal-open
+  position: absolute
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  margin: 0 auto
+  background-color: rgba(0, 0, 0, 0.5)
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 9999
+
+  &-content 
+    min-height: 42vh
+    background-color: white
+    padding: 20px
+    border-radius: 5px
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
+    max-height: 80vh
+    overflow-y: auto
+  
+  
+  &.hidden 
+    display: none

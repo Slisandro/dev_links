@@ -1,13 +1,23 @@
 import React from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import TextFieldComponent from './textfield-component';
-
-const defaultList = ["A", "B", "C", "D", "E"];
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+// import TextFieldComponent from './textfield-component';
+import { useDispatch, useSelector } from 'react-redux';
+import technologies, { TechnologiesLabel } from '../constants/technologies-constants';
+import useCustomModal from '../hooks/use-modal-add-link-hook';
+import FormLinkComponent from './form-link-component';
+import ModalComponent from './modal-component';
+import { setRemoveLink } from '../redux/reducers/links-reducers';
 
 // React state to track order of items
+interface Item { type: TechnologiesLabel, url: string }
 
 function ListDraggableComponent() {
-    const [itemList, setItemList] = React.useState(defaultList);
+    const links = useSelector((state: { links: Item[] }) => state.links);
+    const [itemList, setItemList] = React.useState<Item[]>(links);
+
+    React.useEffect(() => {
+        setItemList(links)
+    }, [links])
 
     // Function to update list on drop
     const handleDrop = (droppedItem: any) => {
@@ -28,71 +38,67 @@ function ListDraggableComponent() {
                 <Droppable droppableId="list-container">
                     {(provided) => (
                         <div
-                            // style={{ width: "100%"}} //, maxHeight: "225px", overflowY: "auto" }}
                             className="list-container"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {itemList.map((item, index) => (
-                                <Draggable key={item} draggableId={item} index={index}>
-                                    {(provided) => (
-                                        <div
-                                            className="item-container"
-                                            ref={provided.innerRef}
-                                            {...provided.dragHandleProps}
-                                            {...provided.draggableProps}
-                                        >
-                                            <div className="header-link">
-                                                <div className="detail-item">
-                                                    <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect width="12" height="1" fill="#737373" />
-                                                        <rect y="5" width="12" height="1" fill="#737373" />
-                                                    </svg>
-                                                    <p className="link-number">
-                                                        Link {index + 1}
-                                                    </p>
-                                                </div>
-                                                <button>Remove</button>
-                                            </div>
-                                            {/* <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "column" }}>
-                                                <div className="container-input">
-                                                    <label>Plataform</label>
-                                                    <TextFieldComponent
-                                                        id={"username"}
-                                                        name={"username"}
-                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => null}
-                                                        // error={"errors.username"}
-                                                        value={"values.username"}
-                                                        placeholder="e.g. alex@email.com"
-                                                        icon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                            <path d="M14 3H2C1.86739 3 1.74021 3.05268 1.64645 3.14645C1.55268 3.24021 1.5 3.36739 1.5 3.5V12C1.5 12.2652 1.60536 12.5196 1.79289 12.7071C1.98043 12.8946 2.23478 13 2.5 13H13.5C13.7652 13 14.0196 12.8946 14.2071 12.7071C14.3946 12.5196 14.5 12.2652 14.5 12V3.5C14.5 3.36739 14.4473 3.24021 14.3536 3.14645C14.2598 3.05268 14.1326 3 14 3ZM13.5 12H2.5V4.63688L7.66187 9.36875C7.75412 9.45343 7.87478 9.50041 8 9.50041C8.12522 9.50041 8.24588 9.45343 8.33813 9.36875L13.5 4.63688V12Z" fill="#737373" />
-                                                        </svg>}
-                                                    />
-                                                </div>
-                                                <div className="container-input">
-                                                    <label>Link</label>
-                                                    <TextFieldComponent
-                                                        id={"username"}
-                                                        name={"username"}
-                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => null}
-                                                        // error={"errors.username"}
-                                                        value={"values.username"}
-                                                        placeholder="e.g. alex@email.com"
-                                                        icon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                            <path d="M14 3H2C1.86739 3 1.74021 3.05268 1.64645 3.14645C1.55268 3.24021 1.5 3.36739 1.5 3.5V12C1.5 12.2652 1.60536 12.5196 1.79289 12.7071C1.98043 12.8946 2.23478 13 2.5 13H13.5C13.7652 13 14.0196 12.8946 14.2071 12.7071C14.3946 12.5196 14.5 12.2652 14.5 12V3.5C14.5 3.36739 14.4473 3.24021 14.3536 3.14645C14.2598 3.05268 14.1326 3 14 3ZM13.5 12H2.5V4.63688L7.66187 9.36875C7.75412 9.45343 7.87478 9.50041 8 9.50041C8.12522 9.50041 8.24588 9.45343 8.33813 9.36875L13.5 4.63688V12Z" fill="#737373" />
-                                                        </svg>}
-                                                    />
-                                                </div>
-                                            </div> */}
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
+                            {itemList.map(({ type, url }, index) =>
+                                <ListItem type={type} url={url} index={index} key={type} />
+                            )}
+                            {provided.placeholder}
                         </div>
                     )}
                 </Droppable>
             </DragDropContext>
         </div>
+    )
+};
+
+const ListItem = ({ type, url, index }: { type: Item["type"], url: Item["url"], index: number }) => {
+    const { modalState, toggleModal } = useCustomModal(false);
+    const dispatch = useDispatch();
+    const handleEdit = () => toggleModal();
+    const handleRemove = () => dispatch(setRemoveLink(type))
+    return (
+        <>
+            {modalState && (
+                <ModalComponent open={modalState}>
+                    <FormLinkComponent entity={{ type, url }} toggleModal={toggleModal} />
+                </ModalComponent>
+            )}
+            <Draggable key={type} draggableId={type} index={index}>
+                {(provided) => (
+                    <div
+                        className="item-container"
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        style={{ display: "flex", userSelect: "none", ...provided.draggableProps.style }}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", gap: "20px", userSelect: "none" }}>
+                            {technologies.find(t => t.id === type)?.icon}
+                            {url}
+                        </div>
+                        <div style={{ display: "flex", gap: "10px", marginLeft: "auto" }}>
+                            <button
+                                className="button outline"
+                                style={{ cursor: "pointer", width: "max-content", height: "max-content", padding: "8px" }}
+                                onClick={handleEdit}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6" style={{ width: "18px", height: "18px" }}>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                </svg>
+                            </button>
+                            <button className="button outline" style={{ cursor: "pointer", width: "max-content", height: "max-content", padding: "8px" }} onClick={handleRemove}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6" style={{ width: "18px", height: "18px" }}>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </Draggable>
+        </>
     )
 }
 
