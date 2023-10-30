@@ -17,10 +17,10 @@ function ButtonComponent({
     type = 'default',
     buttonType = "button",
     className,
-    // onClick
+    onClick = () => null
 }: ButtonProps) {
     return (
-        <button type={buttonType} className={`button ${type} ${className}`} disabled={disabled}>
+        <button type={buttonType} onClick={onClick} className={`button ${type} ${className}`} disabled={disabled}>
             {icon}
             {label}
         </button>
