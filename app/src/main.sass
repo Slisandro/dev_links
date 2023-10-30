@@ -468,9 +468,9 @@ body
     width: 55%
     flex-direction: column
     align-items: flex-start
-    gap: 40px
     background: $white
     padding: 0 40px
+    gap: 15px
     border-radius: 12px
 
     .header 
@@ -526,6 +526,9 @@ body
         button
             width: max-content
 
+
+.edit-links.empty 
+    gap: 40px
 
 .edit-personal-data 
     display: flex
@@ -609,3 +612,61 @@ body
 
         button
             width: max-content
+
+.list-container 
+    max-height: 300px
+    overflow-y: auto
+
+    .item-container 
+        background-color: #fafafa
+        padding: 15px
+        width: calc(100% - 60px)
+        border-radius: 12px
+        height: auto
+        margin: 10px
+
+        .header-link
+            width: 100%
+            display: flex
+            justifyContent: space-between
+            align-items: center 
+            margin: 5px 0
+            
+            .detail-item 
+                width: 100%
+                display: flex
+                align-items: center
+                gap: 10px
+
+                .link-number
+                    color: #737373
+                    font-family: Instrument Sans
+                    font-size: 16px
+                    font-style: normal
+                    font-weight: 700
+                    line-height: 150%
+                    margin: 0
+
+            button 
+                border: none
+                background-color: transparent
+                color: #737373
+                font-family: Instrument Sans
+                font-size: 16px
+                font-style: normal
+                font-weight: 400
+                line-height: 150%
+                margin: 0
+
+
+    .container-input 
+        width: 100%
+        margin: 5px 0
+        
+        label
+            color: #737373
+            font-family: Instrument Sans
+            font-size: 12px
+            font-style: normal
+            font-weight: 400
+            line-height: 150%
