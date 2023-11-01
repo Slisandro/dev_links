@@ -52,4 +52,6 @@ const technologies = [
 
 export type TechnologiesLabel = "GitHub" | "LinkedIn" | "YouTube" | "Facebook" | "Twitch" | "GitLab" | "Stack Overflow";
 
+export type TechnologiesId = "github" | "linkedin" | "youtube" | "facebook" | "twitch" | "gitlab" | "stackoverflow";
+
 export default technologies;
