@@ -11,7 +11,7 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
     const { values, errors, handleChange, setFieldValue } = useFormikLinkHook(entity);
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        if(entity) {
+        if (entity) {
             dispatch(setEditLink(values))
         } else {
             dispatch(setAddLink(values))
@@ -30,7 +30,7 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
             <h2>
                 {entity ? "Edit Link" : "Create Link"}
             </h2>
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <form onSubmit={handleSubmit} className="form-links" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                 <DropdownComponent
                     id="type"
                     name="type"
@@ -49,8 +49,18 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
                     onChange={handleChange}
                 />
                 <div className="actions" style={{ gap: "15px", marginTop: "10px", paddingBottom: 0 }}>
-                    <ButtonComponent onClick={handleCancel} label={'Cancel'} type="outline" disabled={false} />
-                    <ButtonComponent buttonType="submit" label={'Save'} type="default" disabled={false} />
+                    <ButtonComponent
+                        onClick={handleCancel}
+                        label={'Cancel'}
+                        type="outline"
+                        disabled={false}
+                    />
+                    <ButtonComponent
+                        buttonType="submit"
+                        label={'Save'}
+                        type="default"
+                        disabled={!!errors.type || !!errors.url}
+                    />
                 </div>
             </form>
         </>
