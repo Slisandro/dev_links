@@ -25,10 +25,7 @@ function AllRoutes() {
                 />
                 <Route path='/links' element={<EditLinksLayout />} />
                 <Route path='/profile' element={<EditPersonalDataLayout />} />
-<<<<<<< HEAD
                 <Route path='/preview' element={<PreviewLayout />} />
-=======
->>>>>>> 95fd6025c0a1ccc090bda12e2711c161af32e660
             </Route>
             <Route path='/register' element={<RegisterLayout />} />
             <Route path='/login' element={<LoginLayout />} />
