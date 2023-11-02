@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import useCustomModal from '../hooks/use-modal-add-link-hook';
+import { UserLogged } from '../redux/reducers/authentication';
 import { Link } from "../redux/reducers/links-reducers";
+import { updateLinkService } from '../servicies/links';
 import ButtonComponent from "./button-component";
 import FormLinkComponent from './form-link-component';
 import ListDraggableComponent from "./list-draggable-component";
@@ -9,11 +11,17 @@ import ModalComponent from './modal-component';
 
 function EditLinksComponent() {
   const links = useSelector((state: { links: Link[] }) => state.links);
+  const { user }: Partial<UserLogged> = useSelector((state: { userLoggedReducers: UserLogged }) => state.userLoggedReducers);
   const { modalState, toggleModal } = useCustomModal(false);
   const handleModalAddLink = (e: any) => {
     e.preventDefault();
     toggleModal()
   };
+
+  const handleSave = (e: any) => {
+    e.preventDefault();
+    updateLinkService(Number(user?.id), links);
+  }
 
   React.useEffect(() => { }, [links])
 
@@ -28,26 +36,31 @@ function EditLinksComponent() {
         <h2>Customize your links</h2>
         <h4>Add/edit/remove links below and then share all your profiles with the world!</h4>
       </div>
-      <form onSubmit={handleModalAddLink} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+      <form
+        onSubmit={handleModalAddLink}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}
+      >
         <ButtonComponent
           buttonType={"submit"}
           label={"+ Add new link"}
           type="outline"
           disabled={links.length === 5}
         />
-        <span style={{ margin: "0 15px 0 25px", fontWeight: "700", fontSize: "small" }}>{links.length}/5</span>
+        <span
+          style={{ margin: "0 15px 0 25px", fontWeight: "700", fontSize: "small" }}
+        >
+          {links.length}/5
+        </span>
       </form>
-      <LinksContent />
+      <LinksContent links={links} />
       <div className="actions">
-        <ButtonComponent label="Save" type="outline" disabled={true} />
+        <ButtonComponent label="Save" type="outline" onClick={handleSave} disabled={false} />
       </div>
     </div>
   )
-}
+};
 
-const LinksContent = () => {
-  const links = useSelector((state: { links: Link[] }) => state.links);
-
+const LinksContent = ({ links }: { links: Link[] }) => {
   React.useEffect(() => { }, [links]);
 
   if (!links.length) {
