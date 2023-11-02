@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginServicie } from '../servicies/authentication';
 import { login } from '../redux/reducers/authentication';
 import { setProfile } from '../redux/reducers/user-profile-reducers';
+import { setOrderLinks } from '../redux/reducers/links-reducers';
 
 function LoginLayout() {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function LoginLayout() {
         if (response.token) {
             dispatch(login({ ...response, state: "authenticated" }))
             dispatch(setProfile(response.profile))
+            dispatch(setOrderLinks(response.links.objectdata))
             setTimeout(() => {
                 navigate("/")
             }, 500);

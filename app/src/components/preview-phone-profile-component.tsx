@@ -15,8 +15,8 @@ interface User {
 function PreviewPhoneProfileComponent() {
     const { name, lastname, username, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
     const links = useSelector((state: { links: Link[] }) => state.links);
+
     useEffect(() => { }, [name, lastname, username, image, links])
-    console.log({ links })
 
     return (
         <svg style={{ zoom: .8 }} width="308" height="632" viewBox="0 0 308 632" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,10 +39,6 @@ function PreviewPhoneProfileComponent() {
                 fill="#EEEEEE"
             />
             <Links links={links} />
-            {/* // <rect x="35" y="332" width="237" height="44" rx="8" fill="#EEEEEE" />
-            // <rect x="35" y="396" width="237" height="44" rx="8" fill="#EEEEEE" />
-            // <rect x="35" y="460" width="237" height="44" rx="8" fill="#EEEEEE" />
-            // <rect x="35" y="524" width="237" height="44" rx="8" fill="#EEEEEE" /> */}
             <defs>
                 <clipPath id="clip0_26_969">
                     <rect width="16" height="16" fill="white" transform="translate(51 292)" />
@@ -143,8 +139,8 @@ const Links = ({ links }: { links: Link[] }) => {
     useEffect(() => { }, [links])
     return (
         <>
-            {links.map(({ type }, index) => (
-                <PreviewLinksComponent type={type} key={type} {...POSITION[index]} />
+            {links.map(({ type, url }, index) => (
+                <PreviewLinksComponent type={type} url={url} key={type} {...POSITION[index]} />
             ))}
         </>
     )

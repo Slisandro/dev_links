@@ -3,20 +3,16 @@ import { ProfileService } from '../profile/profile.service';
 import { Users } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
+import { LinkService } from 'src/links/links.service';
 
 @Controller('auth')
 export class AuthController {
     constructor(
         private userService: UsersService,
         private authService: AuthService,
-        private userProfileService: ProfileService
+        private userProfileService: ProfileService,
+        private linkService: LinkService 
     ) { }
-
-    // @Get("/onlyauth")
-    // @UseGuards(AuthGuard("jwt"))
-    // async hiddenInformation() {
-    //     return "hidden information";
-    // }
 
     @Post('reset-password')
     async resetPassword(@Body() payload: { username: string, password: string }) {
@@ -44,6 +40,8 @@ export class AuthController {
 
         await this.userProfileService.create(user.username, user.id);
 
+        await this.linkService.create(user.id, []);
+
         const response = await this.authService.sign(user);
 
         return response;
@@ -60,10 +58,12 @@ export class AuthController {
         if (user) {
             const responseAuth = await this.authService.sign(user);
             const responseProfile = await this.userProfileService.findOneByUsername(user.username);
-
+            const responseLinks = await this.linkService.findOneByUsername(user.id);
+            
             return {
                 ...responseAuth,
-                profile: responseProfile
+                profile: responseProfile,
+                links: responseLinks
             };
         }
 
