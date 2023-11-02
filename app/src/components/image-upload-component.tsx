@@ -16,7 +16,7 @@ function ImageUploadComponent() {
             setImage(selectedImage);
             const imageUrl = URL.createObjectURL(selectedImage);
             setPreviewUrl(imageUrl);
-            dispatch(setImageAction(imageUrl))
+            dispatch(setImageAction({ url: imageUrl, file: selectedImage }))
         }
     };
 

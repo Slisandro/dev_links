@@ -1,19 +1,22 @@
 import { useSelector } from 'react-redux';
 import { UserProfileState } from "../redux/reducers/user-profile-reducers";
 import { useEffect } from 'react';
+import { Link } from '../redux/reducers/links-reducers';
+import PreviewLinksComponent from './preview-links-component';
 
 interface User {
     image: string
     name: string
     lastname: string
-    email: string
+    username: string
     links: { name: string, url: string }[]
 }
 
 function PreviewPhoneProfileComponent() {
-    const { name, lastname, email, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+    const { name, lastname, username, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+    const links = useSelector((state: { links: Link[] }) => state.links);
 
-    useEffect(() => {}, [name, lastname, email, image])
+    useEffect(() => { }, [name, lastname, username, image, links])
 
     return (
         <svg style={{ zoom: .8 }} width="308" height="632" viewBox="0 0 308 632" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,8 +28,8 @@ function PreviewPhoneProfileComponent() {
                 </clipPath>
             </defs>
             <Image href={image} />
-            <Name name={name + " " + lastname ?? undefined} />
-            <Email email={email} />
+            <Name name={name} lastname={lastname} />
+            <Email username={username} />
             <rect
                 x="30"
                 y="245"
@@ -35,11 +38,7 @@ function PreviewPhoneProfileComponent() {
                 rx="4"
                 fill="#EEEEEE"
             />
-            <rect x="35" y="268" width="237" height="44" rx="8" fill="#EEEEEE" />
-            <rect x="35" y="332" width="237" height="44" rx="8" fill="#EEEEEE" />
-            <rect x="35" y="396" width="237" height="44" rx="8" fill="#EEEEEE" />
-            <rect x="35" y="460" width="237" height="44" rx="8" fill="#EEEEEE" />
-            <rect x="35" y="524" width="237" height="44" rx="8" fill="#EEEEEE" />
+            <Links links={links} />
             <defs>
                 <clipPath id="clip0_26_969">
                     <rect width="16" height="16" fill="white" transform="translate(51 292)" />
@@ -65,28 +64,34 @@ const Image = ({ href }: { href?: string }) => href ?
         fill="#EEEEEE"
     />;
 
-const Name = ({ name }: { name?: string }) => name ?
-    <text
-        x="153.5"
-        y="195"
-        textAnchor="middle"
-        fontSize="18"
-        fontFamily="Instrument Sans"
-        fontWeight={600}
-        fill="#333"
-    >
-        {name}
-    </text>
-    : <rect
-        x="73.5"
-        y="185"
-        width="160"
-        height="16"
-        rx="8"
-        fill="#EEEEEE"
-    />;
+const Name = ({ name, lastname }: { name: string, lastname: string }) => {
+    const fullName = name || lastname ? name.concat(" ", lastname) : "";
+    useEffect(() => { }, [name, lastname])
+    return (
+        fullName ?
+            <text
+                x="153.5"
+                y="195"
+                textAnchor="middle"
+                fontSize="18"
+                fontFamily="Instrument Sans"
+                fontWeight={600}
+                fill="#333"
+            >
+                {fullName}
+            </text>
+            : <rect
+                x="73.5"
+                y="185"
+                width="160"
+                height="16"
+                rx="8"
+                fill="#EEEEEE"
+            />
+    );
+}
 
-const Email = ({ email }: { email?: string }) => email ?
+const Email = ({ username }: { username?: string }) => username ?
     <text
         x="153.5"
         y="230"
@@ -96,7 +101,7 @@ const Email = ({ email }: { email?: string }) => email ?
         fontWeight={400}
         fill="#333"
     >
-        {email}
+        {username}
     </text>
     : <rect
         x="117.5"
@@ -106,5 +111,39 @@ const Email = ({ email }: { email?: string }) => email ?
         rx="4"
         fill="#EEEEEE"
     />
+
+const POSITION = [
+    {
+        x: "35",
+        y: "268"
+    },
+    {
+        x: "35",
+        y: "332"
+    },
+    {
+        x: "35",
+        y: "396"
+    },
+    {
+        x: "35",
+        y: "460"
+    },
+    {
+        x: "35",
+        y: "524"
+    }
+]
+
+const Links = ({ links }: { links: Link[] }) => {
+    useEffect(() => { }, [links])
+    return (
+        <>
+            {links.map(({ type, url }, index) => (
+                <PreviewLinksComponent type={type} url={url} key={type} {...POSITION[index]} />
+            ))}
+        </>
+    )
+}
 
 export default PreviewPhoneProfileComponent

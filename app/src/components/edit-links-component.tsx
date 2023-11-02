@@ -1,13 +1,70 @@
+import React from 'react';
+import { useSelector } from "react-redux";
+import useCustomModal from '../hooks/use-modal-add-link-hook';
+import { UserLogged } from '../redux/reducers/authentication';
+import { Link } from "../redux/reducers/links-reducers";
+import { updateLinkService } from '../servicies/links';
 import ButtonComponent from "./button-component";
+import FormLinkComponent from './form-link-component';
+import ListDraggableComponent from "./list-draggable-component";
+import ModalComponent from './modal-component';
 
 function EditLinksComponent() {
+  const links = useSelector((state: { links: Link[] }) => state.links);
+  const { user }: Partial<UserLogged> = useSelector((state: { userLoggedReducers: UserLogged }) => state.userLoggedReducers);
+  const { modalState, toggleModal } = useCustomModal(false);
+  const handleModalAddLink = (e: any) => {
+    e.preventDefault();
+    toggleModal()
+  };
+
+  const handleSave = (e: any) => {
+    e.preventDefault();
+    updateLinkService(Number(user?.id), links);
+  }
+
+  React.useEffect(() => { }, [links])
+
   return (
-    <div className="edit-links">
+    <div className={`edit-links ${links.length ? "not-empty" : "empty"}`}>
+      {modalState && (
+        <ModalComponent open={modalState}>
+          <FormLinkComponent toggleModal={toggleModal} />
+        </ModalComponent>
+      )}
       <div className="header">
         <h2>Customize your links</h2>
         <h4>Add/edit/remove links below and then share all your profiles with the world!</h4>
       </div>
-      <ButtonComponent label={"+ Add new link"} type="outline" disabled={false} />
+      <form
+        onSubmit={handleModalAddLink}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}
+      >
+        <ButtonComponent
+          buttonType={"submit"}
+          label={"+ Add new link"}
+          type="outline"
+          disabled={links.length === 5}
+        />
+        <span
+          style={{ margin: "0 15px 0 25px", fontWeight: "700", fontSize: "small" }}
+        >
+          {links.length}/5
+        </span>
+      </form>
+      <LinksContent links={links} />
+      <div className="actions">
+        <ButtonComponent label="Save" type="outline" onClick={handleSave} disabled={false} />
+      </div>
+    </div>
+  )
+};
+
+const LinksContent = ({ links }: { links: Link[] }) => {
+  React.useEffect(() => { }, [links]);
+
+  if (!links.length) {
+    return (
       <div className="links">
         <svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 250 161" fill="none">
           <path opacity="0.3" d="M48.6936 15.4213C23.3786 25.2238 4.59362 50.0679 0.857884 80.1285C-2.26282 105.459 5.19347 133.446 49.0884 141.419C134.494 156.939 222.534 158.754 242.952 116.894C263.369 75.0336 235.427 8.00293 192.079 3.36363C157.683 -0.326546 98.1465 -3.7206 48.6936 15.4213Z" fill="white" />
@@ -51,10 +108,11 @@ function EditLinksComponent() {
         <h2>Let’s get you started</h2>
         <p>Use the “Add new link” button to get started. Once you have more than one link, you can reorder and edit them. We’re here to help you share your profiles with everyone!</p>
       </div>
-      <div className="actions">
-        <ButtonComponent label="Save" type="outline" disabled={true} />
-      </div>
-    </div>
+    )
+  }
+
+  return (
+    <ListDraggableComponent />
   )
 }
 

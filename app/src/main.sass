@@ -16,7 +16,7 @@ $red: #FF3939
 
 $font-instrument: 'Instrument Sans', sans-serif
 
-$shadow: 0px 0px 32px 0px $blue-primary
+$shadow: 0px 0px 12px 0px $blue-ternary
 
 body 
     margin: 0
@@ -30,6 +30,27 @@ body
     display: flex
     align-items: center
     justify-content: center
+
+/* Estilos para la barra de desplazamiento */
+::-webkit-scrollbar 
+  width: 10px /* Ancho de la barra de desplazamiento */
+
+
+/* Estilos para el track (fondo) de la barra de desplazamiento */
+::-webkit-scrollbar-track 
+  background-color: $gray-ternary /* Color de fondo del track */
+
+
+/* Estilos para el thumb (manija) de la barra de desplazamiento */
+::-webkit-scrollbar-thumb 
+  background-color: $gray-secondary /* Color de fondo del thumb */
+  border-radius: 5px /* Radio de borde del thumb */
+
+
+/* Estilos para el thumb cuando se está arrastrando */
+::-webkit-scrollbar-thumb:hover 
+  background-color: $gray-primary /* Color de fondo del thumb al pasar el mouse sobre él */
+
 
 // components
 
@@ -51,6 +72,7 @@ body
     align-items: center
     gap: 12px
     align-self: stretch
+    max-width: 100%
 
     &:active 
         box-shadow: $shadow
@@ -58,6 +80,7 @@ body
     &:focus 
         border-color: $blue-primary
     
+
     input 
         color: $black
         border: none
@@ -69,6 +92,16 @@ body
 
     span 
         color: $red
+        margin-left: auto
+        font-size: small
+        position: absolute
+        right: 5px
+        left: auto
+
+.textfield.error 
+    position: relative
+    border: 1px solid $red !important
+    max-width: 100%
 
 .button 
     display: flex
@@ -138,6 +171,7 @@ body
     align-items: flex-start
     gap: 8px
     width: 480px
+    position: relative
 
     .selected 
         display: flex
@@ -146,13 +180,17 @@ body
         align-items: center
         gap: 12px
         background-color: $white
-        border: 1px solid $blue-primary
+        border: 1px solid $gray-primary
         border-radius: 8px
+
+        svg 
+            path
+                strike: none
 
         &:active
             box-shadow: $shadow
 
-    span 
+    .label-select 
         width: 90%
         font-family: $font-instrument
         text-align: start
@@ -161,15 +199,21 @@ body
         line-height: 150%
 
     .options
+        position: absolute
+        top: 115%
+        background: $white
         display: flex
         width: 100%
+        z-index: 100
         flex-direction: column
-        justify-content: center
-        align-items: flex-start
+        justify-content: flex-start
+        align-items: center
         gap: 12px
+        max-height: 125px
+        overflow-y: auto
         padding-top: 8px
         padding-bottom: 8px
-        border-radius: 8px
+        border-radius: 8px  
         border: 1px solid $gray-secondary
 
         .option 
@@ -184,7 +228,28 @@ body
             font-size: 16px
             font-weight: 400
             line-height: 150%
-            
+
+.dropdown.error 
+    position: relative
+    border: 1px solid $red !important
+    max-width: 100%
+    border-radius: 8px
+
+    .selected
+        border: none
+
+    .span-error
+        color: $red
+        margin-left: auto
+        height: 100%
+        font-size: small !important
+        position: absolute
+        right: 5px
+        left: auto
+        display: flex
+        align-items: center
+        margin-right: 40px 
+
 .image-upload 
     display: flex
     align-items: center
@@ -311,6 +376,9 @@ body
                     line-height: 150%
                     color: $black
 
+                input 
+                    width: 100%
+
         .register 
             text-align: center
             color: $gray-primary
@@ -432,6 +500,7 @@ body
             font-weight: 600
             color: $gray-primary
             padding: 11px 27px
+            border: none
 
         .selected 
             color: $blue-primary
@@ -452,9 +521,9 @@ body
     width: 55%
     flex-direction: column
     align-items: flex-start
-    gap: 40px
     background: $white
     padding: 0 40px
+    gap: 15px
     border-radius: 12px
 
     .header 
@@ -510,6 +579,9 @@ body
         button
             width: max-content
 
+
+.edit-links.empty 
+    gap: 40px
 
 .edit-personal-data 
     display: flex
@@ -593,3 +665,92 @@ body
 
         button
             width: max-content
+
+.list-container 
+    height: 300px
+    max-height: 300px
+    overflow-y: auto
+
+    .item-container 
+        background-color: #fafafa
+        padding: 15px
+        width: calc(100% - 60px)
+        border-radius: 12px
+        height: auto
+        margin: 10px
+
+        .header-link
+            width: 100%
+            display: flex
+            justifyContent: space-between
+            align-items: center 
+            margin: 5px 0
+            
+            .detail-item 
+                width: 100%
+                display: flex
+                align-items: center
+                gap: 10px
+
+                .link-number
+                    color: #737373
+                    font-family: Instrument Sans
+                    font-size: 16px
+                    font-style: normal
+                    font-weight: 700
+                    line-height: 150%
+                    margin: 0
+
+            button 
+                border: none
+                background-color: transparent
+                color: #737373
+                font-family: Instrument Sans
+                font-size: 16px
+                font-style: normal
+                font-weight: 400
+                line-height: 150%
+                margin: 0
+
+
+    .container-input 
+        width: 100%
+        margin: 5px 0
+        
+        label
+            color: #737373
+            font-family: Instrument Sans
+            font-size: 12px
+            font-style: normal
+            font-weight: 400
+            line-height: 150%
+
+.modal-open
+  position: absolute
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  margin: 0 auto
+  background-color: rgba(0, 0, 0, 0.5)
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 9999
+
+  &-content 
+    min-height: 42vh
+    background-color: white
+    padding: 20px
+    border-radius: 5px
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
+    max-height: 80vh
+    overflow-y: auto
+  
+  
+  &.hidden 
+    display: none
+
+.form-links 
+    input 
+        width: 100%

@@ -2,17 +2,31 @@ import { useState, SVGProps } from 'react';
 import ArrowBottomIcon from '../icons/arrow-bottom-icon';
 import ArrowTopIcon from '../icons/arrow-top-icon';
 import LinkIcon from '../icons/link-icon';
+import { TechnologiesLabel } from '../constants/technologies-constants';
 
-interface Item {
+export interface Item {
     id: string,
     label: string,
-    icon: React.ReactElement<SVGProps<SVGSVGElement>> // React.ReactElement<SVGElement>|Element
+    icon: React.ReactElement<SVGProps<SVGSVGElement>>
 }
 
 interface DropdownProps {
+    id: string
+    name: string
+    value: string
+    error?: string
     options: Item[]
-    selected?: Item
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    disabled?: boolean
+    onChange: (v: TechnologiesLabel) => void
+}
+
+interface SelectItemProps {
+    selected: Item,
+    open: boolean,
+    handleClick: () => void;
+    id: string;
+    name: string,
+    disabled?: boolean
 }
 
 const ITEM_DEFAULT: Item = {
@@ -21,18 +35,30 @@ const ITEM_DEFAULT: Item = {
     id: "default"
 }
 
-function DropdownComponent({ options, selected = ITEM_DEFAULT }: DropdownProps) {
+function DropdownComponent({ id, name, value, error, onChange, disabled, options }: DropdownProps) {
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen(!open);
     const handleSelect = (event: React.ChangeEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        const value = event.target.value as TechnologiesLabel;
+        onChange(value); 
         setOpen(false)
     };
 
+    const selected = options.find(op => op.id === value) ?? ITEM_DEFAULT;
+
     return (
-        <div className="dropdown">
-            <SelectItem open={open} handleClick={handleClick} selected={selected} />
+        <div className={`dropdown ${error ? "error" : ""}`}>
+            <SelectItem
+                open={open}
+                disabled={disabled}
+                handleClick={handleClick}
+                selected={selected}
+                name={name}
+                id={id}
+            />
             {open && <Options options={options} handleSelect={handleSelect} />}
+            <span className="span-error">{error}</span>
         </div >
     )
 }
@@ -43,8 +69,14 @@ const Options = (
 ) => (
     <div className="options">
         {options.map(op => (
-            // @ts-expect-error
-            <button className="option" key={op?.id ?? op} onClick={handleSelect}>
+            <button
+                type="button"
+                className="option"
+                key={op?.id ?? op}
+                value={op?.id}
+                // @ts-expect-error
+                onClick={handleSelect}
+            >
                 {op?.icon}
                 {op?.label ?? op}
             </button>
@@ -53,12 +85,12 @@ const Options = (
 );
 
 const SelectItem = (
-    { handleClick, selected, open }
-        : { selected: Item, open: boolean, handleClick: () => void; }
+    { handleClick, selected, open, id, name, disabled }
+        : SelectItemProps
 ) => (
-    <button className="selected" onClick={handleClick}>
+    <button type="button" disabled={disabled} className="selected" onClick={handleClick} id={id} name={name}>
         {selected.icon}
-        <span>{selected.label}</span>
+        <span className="label-select">{selected.label}</span>
         {open ? (
             <ArrowTopIcon color="currentColor" />
         ) : (

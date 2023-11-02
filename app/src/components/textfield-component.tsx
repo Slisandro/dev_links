@@ -1,10 +1,12 @@
-import React, { SVGProps } from 'react'
+import React, { SVGProps } from 'react';
 
 interface TextField {
+    id?: string
+    name?: string
     placeholder: string
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    type: 'default' | 'active' | 'error',
+    type?: 'default' | 'active' | 'error',
     error?: string,
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>
 }
@@ -20,15 +22,15 @@ interface TextField {
 
 function TextFieldComponent({
     icon,
-    type,
+    type = "default",
     error,
     ...props
 }: TextField) {
     return (
-        <div className={`textfield ${type}`}>
+        <div className={`textfield ${error ? "error" : type}`}>
             {icon}
             <input {...props} />
-            {type === "error" && <span>{error}</span>}
+            <span>{error}</span>
         </div>
     )
 }

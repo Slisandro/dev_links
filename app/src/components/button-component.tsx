@@ -3,10 +3,11 @@ import { SVGProps } from 'react';
 interface ButtonProps {
     label: string
     disabled: boolean
-    type: 'default' | 'outline'
+    type?: 'default' | 'outline'
+    buttonType?: "button" | "submit" | "reset"
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>
     className?: string
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+    onClick?: (e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => void
 }
 
 function ButtonComponent({
@@ -14,11 +15,12 @@ function ButtonComponent({
     icon = <svg width="0" height="0" style={{ display: "none" }}></svg>,
     disabled = false,
     type = 'default',
+    buttonType = "button",
     className,
-    onClick
+    onClick = () => null
 }: ButtonProps) {
     return (
-        <button className={`button ${type} ${className}`} disabled={disabled} onClick={onClick}>
+        <button type={buttonType} onClick={onClick} className={`button ${type} ${className}`} disabled={disabled}>
             {icon}
             {label}
         </button>
