@@ -1,15 +1,17 @@
-import { BadRequestException, Body, Controller, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProfileService } from '../profile/profile.service';
 import { Profile } from './profile.entity';
 import { Storage } from '@google-cloud/storage';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { LinkService } from 'src/links/links.service';
 
 @Controller('profile')
 export class ProfileController {
 
     constructor(
         private storage: Storage,
-        private userProfileService: ProfileService
+        private userProfileService: ProfileService,
+        private linkService: LinkService
     ) {
         this.storage = new Storage({
             projectId: 'roomies-2096e',
@@ -17,10 +19,29 @@ export class ProfileController {
         })
     }
 
+    @Get(':id')
+    async getById(@Param('id') id: number) {
+        const profile = await this.userProfileService.findOneByUserId(id);
+
+        if (!profile) {
+            throw new BadRequestException("User not find");
+        }
+
+        const { name, lastname, image, username } = await this.userProfileService.findOneByUserId(id);
+        const { objectdata } = await this.linkService.findOneByUserId(id)
+        return {
+            name,
+            lastname,
+            username,
+            image,
+            links: objectdata
+        }
+    }
+
     @Put('update')
     async update(@Body() profile: Profile) {
-        const userProfile = await this.userProfileService.findOneByUsername(profile.username);
-
+        const userProfile = await this.userProfileService.findOneByUserId(profile.userid);
+        // console.oog
         if (!userProfile) {
             throw new BadRequestException("User not find");
         }
@@ -33,6 +54,7 @@ export class ProfileController {
     @Post('upload-image')
     @UseInterceptors(FileInterceptor('image'))
     async updateImage(@UploadedFile() image) {
+        console.log({ image })
         const randomName = Array(32).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('');
         const filename = `${randomName}${image.originalname}`;
         const bucket = this.storage.bucket('roomies-2096e.appspot.com');
