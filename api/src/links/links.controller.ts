@@ -31,7 +31,7 @@ export class LinkController {
     @Get('/:userId')
     async getLinks(@Param('userId') userId: number) {
         try {
-            const link = await this.linkService.findOneByUsername(userId);
+            const link = await this.linkService.findOneByUserId(userId);
             return link
         } catch (e) {
             return new BadRequestException(e)
