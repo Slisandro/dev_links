@@ -9,8 +9,6 @@ export class ProfileController {
 
     constructor(
         private storage: Storage,
-        // private userService: UsersService,
-        // private authService: AuthService,
         private userProfileService: ProfileService
     ) {
         this.storage = new Storage({
@@ -18,12 +16,6 @@ export class ProfileController {
             keyFilename: './src/profile/credentials.storage.json'
         })
     }
-
-    // @Get("/onlyauth")
-    // @UseGuards(AuthGuard("jwt"))
-    // async hiddenInformation() {
-    //     return "hidden information";
-    // }
 
     @Put('update')
     async update(@Body() profile: Profile) {
@@ -41,8 +33,6 @@ export class ProfileController {
     @Post('upload-image')
     @UseInterceptors(FileInterceptor('image'))
     async updateImage(@UploadedFile() image) {
-        console.log({ image })
-        
         const randomName = Array(32).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('');
         const filename = `${randomName}${image.originalname}`;
         const bucket = this.storage.bucket('roomies-2096e.appspot.com');
@@ -63,20 +53,4 @@ export class ProfileController {
             throw new BadRequestException('Error uploading image');
         }
     }
-
-    // @Post('login')
-    // async login(@Body() payload: { username: string, password: string }) {
-    //     const user = await this.userService.findOne(payload.username);
-
-    //     if (!user) {
-    //         throw new BadRequestException("User does not exist");
-    //     }
-
-    //     if (user) {
-    //         const response = await this.authService.sign(user);
-    //         return response;
-    //     }
-
-    //     return null;
-    // }
 }
