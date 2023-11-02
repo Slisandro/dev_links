@@ -180,13 +180,17 @@ body
         align-items: center
         gap: 12px
         background-color: $white
-        border: 1px solid $blue-primary
+        border: 1px solid $gray-primary
         border-radius: 8px
+
+        svg 
+            path
+                strike: none
 
         &:active
             box-shadow: $shadow
 
-    span 
+    .label-select 
         width: 90%
         font-family: $font-instrument
         text-align: start
@@ -200,6 +204,7 @@ body
         background: $white
         display: flex
         width: 100%
+        z-index: 100
         flex-direction: column
         justify-content: flex-start
         align-items: center
@@ -223,7 +228,28 @@ body
             font-size: 16px
             font-weight: 400
             line-height: 150%
-            
+
+.dropdown.error 
+    position: relative
+    border: 1px solid $red !important
+    max-width: 100%
+    border-radius: 8px
+
+    .selected
+        border: none
+
+    .span-error
+        color: $red
+        margin-left: auto
+        height: 100%
+        font-size: small !important
+        position: absolute
+        right: 5px
+        left: auto
+        display: flex
+        align-items: center
+        margin-right: 40px 
+
 .image-upload 
     display: flex
     align-items: center
@@ -641,6 +667,7 @@ body
             width: max-content
 
 .list-container 
+    height: 300px
     max-height: 300px
     overflow-y: auto
 
@@ -723,3 +750,7 @@ body
   
   &.hidden 
     display: none
+
+.form-links 
+    input 
+        width: 100%

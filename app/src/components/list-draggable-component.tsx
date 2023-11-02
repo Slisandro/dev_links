@@ -2,16 +2,17 @@ import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 // import TextFieldComponent from './textfield-component';
 import { useDispatch, useSelector } from 'react-redux';
-import technologies, { TechnologiesLabel } from '../constants/technologies-constants';
+import technologies, { TechnologiesId } from '../constants/technologies-constants';
 import useCustomModal from '../hooks/use-modal-add-link-hook';
+import { setRemoveLink, setOrderLinks } from '../redux/reducers/links-reducers';
 import FormLinkComponent from './form-link-component';
 import ModalComponent from './modal-component';
-import { setRemoveLink } from '../redux/reducers/links-reducers';
 
 // React state to track order of items
-interface Item { type: TechnologiesLabel, url: string }
+interface Item { type: TechnologiesId, url: string }
 
 function ListDraggableComponent() {
+    const dispatch = useDispatch();
     const links = useSelector((state: { links: Item[] }) => state.links);
     const [itemList, setItemList] = React.useState<Item[]>(links);
 
@@ -30,6 +31,7 @@ function ListDraggableComponent() {
         updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
         // Update State
         setItemList(updatedList);
+        dispatch(setOrderLinks(updatedList))
     };
 
     return (

@@ -58,7 +58,7 @@ function DropdownComponent({ id, name, value, error, onChange, disabled, options
                 id={id}
             />
             {open && <Options options={options} handleSelect={handleSelect} />}
-            <span>{error}</span>
+            <span className="span-error">{error}</span>
         </div >
     )
 }
@@ -90,7 +90,7 @@ const SelectItem = (
 ) => (
     <button type="button" disabled={disabled} className="selected" onClick={handleClick} id={id} name={name}>
         {selected.icon}
-        <span>{selected.label}</span>
+        <span className="label-select">{selected.label}</span>
         {open ? (
             <ArrowTopIcon color="currentColor" />
         ) : (
