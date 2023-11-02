@@ -20,14 +20,14 @@ export class LinkService {
         return await this.linkRepository.save(links);
     }
 
-    async findOneByUsername(userid: number) {
+    async findOneByUserId(userid: number) {
         return await this.linkRepository.findOne({ where: { userid } });
     }
 
     async update(userid: number, objectdata: { type: string, url: string }[]) {
         // search links by username 
         // change the links, and update it
-        const links = await this.findOneByUsername(userid); // search by username but user change this field, produce error
+        const links = await this.findOneByUserId(userid); // search by username but user change this field, produce error
         console.log({objectdata})
         const updatedProfile = await this.linkRepository.update(
             links.id,
