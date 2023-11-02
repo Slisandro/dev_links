@@ -6,10 +6,10 @@ interface Profile {
     lastname: string;
     username: string;
     image: string;
-    file: File
+    file?: any
 }
 
-export const updateImage = async (image: File) => {
+export const updateImage = async (image: any) => {
     const formData = new FormData();
 
     formData.append('image', image);
@@ -33,11 +33,15 @@ export const updateProfile = async (payload: Profile) => {
         username: payload.username
     };
 
-    if (payload.file) {
+    if (payload.file?.size) {
         imageUrl = await updateImage(payload.file);
-    }
 
-    return await axios.put('http://localhost:3000/profile/update', { ...fields, image: imageUrl ?? payload.image })
+        return await axios.put('http://localhost:3000/profile/update', { ...fields, image: imageUrl ?? payload.image })
+        .then(r => r.data)
+        .catch(e => e.response);
+    };
+
+    return await axios.put('http://localhost:3000/profile/update', { ...fields })
         .then(r => r.data)
         .catch(e => e.response);
 }
