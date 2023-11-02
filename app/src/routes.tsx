@@ -7,6 +7,7 @@ import useIsAuthenticatedHook from './hooks/is-authenticated-hook';
 import EditLinksLayout from './layouts/edit-links-layout';
 import EditPersonalDataLayout from './layouts/edit-personal-data-layout';
 import PreviewLayout from './layouts/preview-layout';
+import ProfilePublicLayout from './layouts/profile-public-layout';
 
 const PrivateRoute = () => {
     const { authentication } = useIsAuthenticatedHook();
@@ -29,6 +30,7 @@ function AllRoutes() {
             </Route>
             <Route path='/register' element={<RegisterLayout />} />
             <Route path='/login' element={<LoginLayout />} />
+            <Route path='/profile/:id' element={<ProfilePublicLayout />} />
         </Routes>
     );
 }
