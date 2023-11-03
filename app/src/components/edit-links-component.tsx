@@ -26,7 +26,7 @@ function EditLinksComponent() {
   React.useEffect(() => { }, [links])
 
   return (
-    <div className={`edit-links ${links.length ? "not-empty" : "empty"}`}>
+    <div className={`container-links ${links.length ? "not-empty" : "empty"}`}>
       {modalState && (
         <ModalComponent open={modalState}>
           <FormLinkComponent toggleModal={toggleModal} />
@@ -36,24 +36,19 @@ function EditLinksComponent() {
         <h2>Customize your links</h2>
         <h4>Add/edit/remove links below and then share all your profiles with the world!</h4>
       </div>
-      <form
-        onSubmit={handleModalAddLink}
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}
-      >
+      <form onSubmit={handleModalAddLink}>
         <ButtonComponent
           buttonType={"submit"}
           label={"+ Add new link"}
           type="outline"
           disabled={links.length === 5}
         />
-        <span
-          style={{ margin: "0 15px 0 25px", fontWeight: "700", fontSize: "small" }}
-        >
+        <span className="count">
           {links.length}/5
         </span>
       </form>
       <LinksContent links={links} />
-      <div className="actions">
+      <div className="footer">
         <ButtonComponent label="Save" type="outline" onClick={handleSave} disabled={false} />
       </div>
     </div>
