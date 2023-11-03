@@ -21,38 +21,553 @@ $shadow: 0px 0px 12px 0px $blue-ternary
 body 
     margin: 0
     font-family: $font-instrument
-
-
-.App 
     background-color: $gray-ternary
+
+/* scrollbar */
+::-webkit-scrollbar 
+  width: 10px /* Ancho de la barra de desplazamiento */
+
+::-webkit-scrollbar-track 
+  background-color: $gray-ternary /* Color de fondo del track */
+
+::-webkit-scrollbar-thumb 
+  background-color: $gray-secondary /* Color de fondo del thumb */
+  border-radius: 5px /* Radio de borde del thumb */
+
+::-webkit-scrollbar-thumb:hover 
+  background-color: $gray-primary /* Color de fondo del thumb al pasar el mouse sobre él */
+/* scrollbar */
+
+/* container */
+.App 
     width: 100vw
     height: 100vh
     display: flex
     align-items: center
     justify-content: center
 
-/* Estilos para la barra de desplazamiento */
-::-webkit-scrollbar 
-  width: 10px /* Ancho de la barra de desplazamiento */
+    @media (max-width: 800px) 
+        height: max-content
+        width: 99%
+        margin: 0 auto
+/* container */
 
+/* home layout */
+/* container */
+.container-home-layout 
+    width: calc(100% - 40px)
+    display: flex
+    flex-direction: column
+    padding: 10px 20px
+    max-height: 100%
+    justify-content: space-around
+    height: calc(100% - 20px)
+    gap: 15px
 
-/* Estilos para el track (fondo) de la barra de desplazamiento */
-::-webkit-scrollbar-track 
-  background-color: $gray-ternary /* Color de fondo del track */
+    @media (max-width: 800px) 
+        padding: 0
+        margin: 15px 0
 
+    /* content */
+    .content 
+        max-width: 100% 
+        display: flex
+        align-items: center
+        justify-content: space-between
 
-/* Estilos para el thumb (manija) de la barra de desplazamiento */
-::-webkit-scrollbar-thumb 
-  background-color: $gray-secondary /* Color de fondo del thumb */
-  border-radius: 5px /* Radio de borde del thumb */
+        .container-preview
+            width: 100%
+            display: flex
+            align-items: center
+            justify-content: space-around
+            background: #fff
+            border-radius: 12px
+            padding: 15px 20%
 
+            @media (max-width: 800px)
+                display: none
 
-/* Estilos para el thumb cuando se está arrastrando */
-::-webkit-scrollbar-thumb:hover 
-  background-color: $gray-primary /* Color de fondo del thumb al pasar el mouse sobre él */
+            .boarding 
+                width: 50%
+                display: flex
+                align-items: flex-start
+                justify-content: center
+                flex-direction: column
+                gap: 20px
 
+                h2
+                    margin: 0
+
+                a
+                    text-decoration: none
+                    width: 100%
+
+                    button 
+                        width: 100%
+
+/* link layout */
+/* container */
+.container-link-layout
+    width: calc(100% - 40px)
+    display: flex
+    flex-direction: column
+    padding: 10px 20px
+    max-height: 100%
+    justify-content: space-around
+    height: calc(100% - 20px)
+    gap: 15px
+
+    @media (max-width: 800px) 
+        padding: 0
+        margin: 15px 0
+
+    /* content */
+    .content 
+        max-width: 100% 
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+        /* container preview */
+        .container-preview
+            width: 35%
+            display: flex
+            align-items: center
+            justify-content: center
+            background: #fff
+            border-radius: 12px
+            padding: 15px
+
+            @media (max-width: 1200px)
+                display: none
+
+        /* container links */
+        .container-links 
+            display: flex
+            height: 100%
+            width: 55%
+            flex-direction: column
+            align-items: flex-start
+            background: $white
+            padding: 0 40px
+            gap: 15px
+            border-radius: 12px
+
+            @media (max-width: 1200px)
+                width: 100%
+
+            @media (max-width: 800px)
+                padding: 0 25px
+
+            .header 
+                display: flex
+                flex-direction: column
+                gap: 8px
+                padding-top: 20px
+
+                h2 
+                    color: $black
+                    font-size: 32px
+                    font-weight: 700
+                    line-weight: 150%
+                    margin: 0
+
+                h4 
+                    color: $gray-primary
+                    font-size: 16px
+                    font-weight: 400
+                    line-weight: 150%
+                    margin: 0
+
+            form 
+                display: flex
+                align-items: center
+                justify-content: space-between
+                width: 100%
+
+            .count
+                margin: 0 15px 0 25px
+                font-weight: 700
+                font-size: small
+            
+            .links 
+                width: 100%
+                display: flex
+                justify-content: center
+                align-items: center
+                flex-direction: column
+                gap: 15px
+
+                h2 
+                    color: $black
+                    font-size: 32px
+                    font-weight: 700
+                    line-weight: 150%
+                    margin: 0
+                    text-align: center
+
+                p 
+                    color: $black
+                    font-size: 16px
+                    font-weight: 400
+                    line-weight: 150%
+                    margin: 0
+                    text-align: center
+
+            .footer
+                width: 100%
+                display: flex
+                justify-content: flex-end
+                padding-bottom: 15px
+
+                button
+                    width: max-content
+
+        .empty 
+            gap: 40px
+
+/* profile layout */
+.container-profile-layout
+    width: calc(100% - 40px)
+    display: flex
+    flex-direction: column
+    padding: 10px 20px
+    max-height: 100%
+    justify-content: space-around
+    height: calc(100% - 20px)
+    gap: 15px  
+
+    @media (max-width: 800px) 
+        padding: 0
+        margin: 15px 0
+
+    /* content */
+    .content 
+        max-width: 100% 
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+        .container-preview 
+            width: 35%
+            display: flex
+            align-items: center
+            justify-content: center
+            background: #fff
+            border-radius: 12px
+            padding: 15px
+
+            @media (max-width: 1200px)
+                display: none
+
+        .container-profile
+            display: flex
+            height: 100%
+            width: 55%
+            flex-direction: column
+            align-items: flex-start
+            gap: 20px
+            background: $white
+            padding: 0 40px
+            border-radius: 12px
+
+            @media (max-width: 1200px)
+                width: 100%
+
+            @media (max-width: 800px)
+                padding: 0 25px
+
+            .header 
+                display: flex
+                flex-direction: column
+                gap: 8px
+                padding-top: 20px
+
+                h2 
+                    color: $black
+                    font-size: 32px
+                    font-weight: 700
+                    line-weight: 150%
+                    margin: 0
+
+                h4 
+                    color: $gray-primary
+                    font-size: 16px
+                    font-weight: 400
+                    line-weight: 150%
+                    margin: 0
+    
+            .image-profile
+                width: calc(100% - 75px)
+                background-color: #FAFAFA
+                display: flex
+                align-items: center
+                justify-content: space-between
+                padding: 15px 45px 15px 30px
+                border-radius: 12px
+
+                @media (max-width: 800px) 
+                    flex-direction: column
+                    align-items: flex-start
+
+                .image-upload 
+                    width: 60%
+
+                    @media (max-width: 800px) 
+                        width: 100%
+                        gap: 30px
+
+                    @media (max-width: 600px) 
+                        flex-direction: column
+
+                    .preview 
+                        width: 115px
+                        height: 115px
+
+                        @media (max-width: 800px) 
+                            width: 140px
+                            height: 140px
+
+                    p 
+                        margin: 0
+                        font-size: small
+
+            .personal-data
+                width: calc(100% - 60px)
+                background-color: #FAFAFA
+                display: flex
+                flex-direction: column
+                gap: 10px
+                align-items: center
+                justify-content: space-between
+                padding: 15px 30px
+                border-radius: 12px
+
+                @media (max-width: 600px) 
+                    gap: 15px
+
+                .container-input 
+                    width: 100%
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+
+                    @media (max-width: 600px) 
+                        flex-direction: column
+                        align-items: flex-start
+                        gap: 10px
+
+                    p
+                        width: 20%
+
+                    .textfield 
+                        width: 60%
+                        padding: 8px
+
+                        @media (max-width: 600px)
+                            width: 100%
+
+                        input 
+                            width: 100%
+
+            .footer
+                width: 100%
+                display: flex
+                justify-content: flex-end
+                padding-bottom: 15px
+
+                button
+                    width: max-content            
+
+/* login layout */
+.container-login-layout 
+    font-family: $font-instrument
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+    border-radius: 12px
+    gap: 40px
+    height: 100vh
+
+    .nav 
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 8px
+        width: inherit
+        padding: 0 40px
+
+    .container-login
+        display: flex
+        padding: 25px 40px
+        flex-direction: column
+        align-items: flex-start
+        max-width: 100%
+        margin: 0 auto
+        gap: 30px
+        align-self: stretch    
+        background-color: $white
+
+        h2 
+            font-size: 32px
+            font-weight: 700
+            line-height: 150%
+            margin: 0
+            color: $black
+            margin-right: 30px
+
+        header 
+            p 
+                font-size: 16px
+                font-weight: 400
+                line-height: 150%
+                margin: 0
+                color: $gray-primary
+                margin-right: 30px
+
+        .form 
+            display: flex
+            flex-direction: column
+            gap: 20px
+            width: 100%
+
+            .container-input
+                display: flex
+                flex-direction: column
+                gap: 4px
+
+                label 
+                    font-size: 12px
+                    font-weight: 400
+                    line-height: 150%
+                    color: $black
+
+                input 
+                    width: 100%
+
+                button 
+                    border: none
+                    background: transparent
+
+                    svg 
+                        width: 10px
+                        height: 10px
+
+            #input-password
+                span 
+                    right: 40px
+
+        .register 
+            text-align: center
+            color: $gray-primary
+            font-size: 16px
+            font-weight: 400
+            line-height: 150%
+            margin: 0
+            display: flex
+            gap: 5px
+
+            a 
+                color: $blue-primary
+
+/* register layout */
+.container-register-layout 
+    font-family: $font-instrument
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+    border-radius: 12px
+    gap: 30px
+    height: 100vh
+
+    .logo 
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 8px
+        width: inherit
+        padding: 0 40px
+
+    .container-register
+        display: flex
+        padding: 25px 40px
+        flex-direction: column
+        align-items: flex-start
+        max-width: 100%
+        margin: 0 auto
+        gap: 30px
+        align-self: stretch    
+        background-color: $white
+
+        h2 
+            font-size: 32px
+            font-weight: 700
+            line-height: 150%
+            margin: 0
+            color: $black
+            margin-right: 30px
+
+        div 
+            p 
+                font-size: 16px
+                font-weight: 400
+                line-height: 150%
+                margin: 0
+                color: $gray-primary
+                margin-right: 30px
+
+        .form 
+            display: flex
+            flex-direction: column
+            gap: 20px
+            width: 100%
+
+            .container-input
+                display: flex
+                flex-direction: column
+                gap: 4px
+
+                label 
+                    font-size: 12px
+                    font-weight: 400
+                    line-height: 150%
+                    color: $black
+
+                button 
+                    border: none
+                    background: transparent
+                    padding-right: 0
+
+                    svg 
+                        width: 10px
+                        height: 10px
+
+            .password 
+                span 
+                    right: 48px
+
+        .login 
+            text-align: center
+            color: $gray-primary
+            font-size: 16px
+            font-weight: 400
+            line-height: 150%
+            margin: 0
+            display: flex
+            gap: 5px
+            justify-content: center
+
+            a 
+                color: $blue-primary
 
 // components
+
+/* navbar */ 
+
 
 .textfield 
     border: 1px solid $gray-secondary
@@ -313,163 +828,6 @@ body
 
 // Layouts
 
-.login-container
-    font-family: $font-instrument
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    margin: 0 auto
-    border-radius: 12px
-    gap: 40px
-
-    .logo 
-        display: flex
-        align-items: center
-        justify-content: center
-        gap: 8px
-        width: inherit
-        padding: 0 40px
-
-    .container
-        display: flex
-        padding: 25px 40px
-        flex-direction: column
-        align-items: flex-start
-        max-width: 100%
-        margin: 0 auto
-        gap: 30px
-        align-self: stretch    
-        background-color: $white
-
-        h2 
-            font-size: 32px
-            font-weight: 700
-            line-height: 150%
-            margin: 0
-            color: $black
-            margin-right: 30px
-
-        div 
-            p 
-                font-size: 16px
-                font-weight: 400
-                line-height: 150%
-                margin: 0
-                color: $gray-primary
-                margin-right: 30px
-
-        .form 
-            display: flex
-            flex-direction: column
-            gap: 20px
-            width: 100%
-
-            .container-input
-                display: flex
-                flex-direction: column
-                gap: 4px
-
-                label 
-                    font-size: 12px
-                    font-weight: 400
-                    line-height: 150%
-                    color: $black
-
-                input 
-                    width: 100%
-
-        .register 
-            text-align: center
-            color: $gray-primary
-            font-size: 16px
-            font-weight: 400
-            line-height: 150%
-            margin: 0
-            display: flex
-            gap: 5px
-
-            a 
-                color: $blue-primary
-
-.register-container 
-    font-family: $font-instrument
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    margin: 0 auto
-    border-radius: 12px
-    gap: 30px
-
-    .logo 
-        display: flex
-        align-items: center
-        justify-content: center
-        gap: 8px
-        width: inherit
-        padding: 0 40px
-
-    .container
-        display: flex
-        padding: 25px 40px
-        flex-direction: column
-        align-items: flex-start
-        max-width: 100%
-        margin: 0 auto
-        gap: 30px
-        align-self: stretch    
-        background-color: $white
-
-        h2 
-            font-size: 32px
-            font-weight: 700
-            line-height: 150%
-            margin: 0
-            color: $black
-            margin-right: 30px
-
-        div 
-            p 
-                font-size: 16px
-                font-weight: 400
-                line-height: 150%
-                margin: 0
-                color: $gray-primary
-                margin-right: 30px
-
-        .form 
-            display: flex
-            flex-direction: column
-            gap: 20px
-            width: 100%
-
-            .container-input
-                display: flex
-                flex-direction: column
-                gap: 4px
-
-                label 
-                    font-size: 12px
-                    font-weight: 400
-                    line-height: 150%
-                    color: $black
-
-        .login 
-            text-align: center
-            color: $gray-primary
-            font-size: 16px
-            font-weight: 400
-            line-height: 150%
-            margin: 0
-            display: flex
-            gap: 5px
-            justify-content: center
-
-            a 
-                color: $blue-primary
-
-
 .navbar 
     display: flex
     justify-content: space-between
@@ -513,158 +871,6 @@ body
 
         button
             padding: 11px 27px
-
-
-.edit-links 
-    display: flex
-    height: 100%
-    width: 55%
-    flex-direction: column
-    align-items: flex-start
-    background: $white
-    padding: 0 40px
-    gap: 15px
-    border-radius: 12px
-
-    .header 
-        display: flex
-        flex-direction: column
-        gap: 8px
-        padding-top: 20px
-
-        h2 
-            color: $black
-            font-size: 32px
-            font-weight: 700
-            line-weight: 150%
-            margin: 0
-
-        h4 
-            color: $gray-primary
-            font-size: 16px
-            font-weight: 400
-            line-weight: 150%
-            margin: 0
-
-    .links 
-        width: 100%
-        display: flex
-        justify-content: center
-        align-items: center
-        flex-direction: column
-        gap: 15px
-
-        h2 
-            color: $black
-            font-size: 32px
-            font-weight: 700
-            line-weight: 150%
-            margin: 0
-            text-align: center
-
-        p 
-            color: $black
-            font-size: 16px
-            font-weight: 400
-            line-weight: 150%
-            margin: 0
-            text-align: center
-
-    .actions
-        width: 100%
-        display: flex
-        justify-content: flex-end
-        padding-bottom: 15px
-
-        button
-            width: max-content
-
-
-.edit-links.empty 
-    gap: 40px
-
-.edit-personal-data 
-    display: flex
-    height: 100%
-    width: 55%
-    flex-direction: column
-    align-items: flex-start
-    gap: 20px
-    background: $white
-    padding: 0 40px
-    border-radius: 12px
-
-    .header 
-        display: flex
-        flex-direction: column
-        gap: 8px
-        padding-top: 20px
-
-        h2 
-            color: $black
-            font-size: 32px
-            font-weight: 700
-            line-weight: 150%
-            margin: 0
-
-        h4 
-            color: $gray-primary
-            font-size: 16px
-            font-weight: 400
-            line-weight: 150%
-            margin: 0
-    
-    .section-image
-        width: calc(100% - 75px)
-        background-color: #FAFAFA
-        display: flex
-        align-items: center
-        justify-content: space-between
-        padding: 15px 45px 15px 30px
-        border-radius: 12px
-
-        .image-upload 
-            width: 60%
-
-            .preview 
-                width: 115px
-                height: 115px
-
-    .section-personal-data
-        width: calc(100% - 60px)
-        background-color: #FAFAFA
-        display: flex
-        flex-direction: column
-        gap: 10px
-        align-items: center
-        justify-content: space-between
-        padding: 15px 30px
-        border-radius: 12px
-
-        .container-input 
-            width: 100%
-            display: flex
-            align-items: center
-            justify-content: space-between
-
-            p
-                width: 20%
-
-            .textfield 
-                width: 60%
-                padding: 8px
-
-                input 
-                    width: 100%
-
-    .actions
-        width: 100%
-        display: flex
-        justify-content: flex-end
-        padding-bottom: 15px
-
-        button
-            width: max-content
 
 .list-container 
     height: 300px
