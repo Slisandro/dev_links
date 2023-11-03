@@ -3,7 +3,7 @@ import { TechnologiesId } from "../../constants/technologies-constants";
 
 export interface Link {
     url: string;
-    type: TechnologiesId
+    type: TechnologiesId | ""
 }
 
 const initialState: Link[] = [];

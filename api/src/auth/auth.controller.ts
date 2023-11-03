@@ -11,7 +11,7 @@ export class AuthController {
         private userService: UsersService,
         private authService: AuthService,
         private userProfileService: ProfileService,
-        private linkService: LinkService 
+        private linkService: LinkService
     ) { }
 
     @Post('reset-password')
@@ -57,9 +57,9 @@ export class AuthController {
 
         if (user) {
             const responseAuth = await this.authService.sign(user);
-            const responseProfile = await this.userProfileService.findOneByUsername(user.username);
-            const responseLinks = await this.linkService.findOneByUsername(user.id);
-            
+            const responseProfile = await this.userProfileService.findOneByUserId(user.id);
+            const responseLinks = await this.linkService.findOneByUserId(user.id);
+
             return {
                 ...responseAuth,
                 profile: responseProfile,

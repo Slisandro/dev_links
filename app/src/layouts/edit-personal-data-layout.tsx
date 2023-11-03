@@ -4,36 +4,10 @@ import PreviewPhoneProfileComponent from "../components/preview-phone-profile-co
 
 function EditPersonalDataLayout() {
     return (
-        <div
-            style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                padding: "10px 20px",
-                maxHeight: "100%"
-            }}
-        >
+        <div className="container-profile-layout">
             <NavBarComponent />
-            <div
-                style={{
-                    maxWidth: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginTop: "20px",
-                }}
-            >
-                <div
-                    style={{
-                        width: "34%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: "#fff",
-                        borderRadius: "12px",
-                        padding: "15px"
-                    }}
-                >
+            <div className="content">
+                <div className="container-preview">
                     <PreviewPhoneProfileComponent />
                 </div>
 

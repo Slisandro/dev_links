@@ -8,30 +8,31 @@ import TextFieldComponent from "./textfield-component";
 
 function EditPersonalDataComponent() {
     const dispatch = useDispatch();
-    const { name, lastname, username, image, file }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
+    const { name, lastname, username, image, file, id }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
     const { errors, values, handleChange } = useFormikProfileHook({ name, lastname, username });
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const response = await updateProfile({ ...values, image, file });
-        // if (response) {
-        //     dispatch(setName(response.name));
-        //     dispatch(setLastname(response.lastname));
-        //     dispatch(setUsername(response.username));
-        // };
+        // @ts-ignore
+        const response = await updateProfile({ ...values, id, image, file });
+        if (response) {
+            dispatch(setName(response.name));
+            dispatch(setLastname(response.lastname));
+            dispatch(setUsername(response.username));
+        };
     }
 
     return (
-        <form className="edit-personal-data" onSubmit={handleSubmit}>
+        <form className="container-profile" onSubmit={handleSubmit}>
             <div className="header">
                 <h2>Profile Details</h2>
                 <h4>Add your details to create a personal touch to your profile.</h4>
             </div>
-            <div className="section-image">
+            <div className="image-profile">
                 <p>Profile picture</p>
                 <ImageUploadComponent />
             </div>
-            <div className="section-personal-data">
+            <div className="personal-data">
                 <div className="container-input">
                     <label>First Name *</label>
                     <TextFieldComponent
@@ -69,7 +70,7 @@ function EditPersonalDataComponent() {
                     />
                 </div>
             </div>
-            <div className="actions">
+            <div className="footer">
                 <ButtonComponent buttonType="submit" label="Save" type="outline" disabled={!!errors.name || !!errors.lastname || !!errors.username} />
             </div>
         </form>

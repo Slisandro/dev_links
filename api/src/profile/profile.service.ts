@@ -22,16 +22,16 @@ export class ProfileService {
         return await this.userProfileRepository.save(userProfile);
     }
 
-    async findOneByUsername(username: string) {
-        return await this.userProfileRepository.findOne({ where: { username }});
+    async findOneByUserId(userid: string|number) {
+        return await this.userProfileRepository.findOne({ where: { userid: Number(userid) } });
     }
 
     async update(p: Profile) {
         // search profile by username 
         // change the profile, and update it
-        const profile = await this.findOneByUsername(p.username); // search by username but user change this field, produce error
+        const profile = await this.findOneByUserId(p.userid); // search by username but user change this field, produce error
 
-        const updatedProfile = await this.userProfileRepository.update(profile.id, {...profile, ...p});
+        const updatedProfile = await this.userProfileRepository.update(profile.id, { ...profile, ...p });
 
         return updatedProfile
     }
