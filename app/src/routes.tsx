@@ -18,7 +18,7 @@ function AllRoutes() {
     return (
         <Routes>
             <Route path='/'
-                element={<EditLinksLayout />}
+                element={<EditPersonalDataLayout />}
             />
             <Route path='/' element={<PrivateRoute />}>
                 <Route path='/home'
