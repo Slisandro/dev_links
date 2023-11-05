@@ -26,11 +26,11 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
         setFieldValue("type", value)
 
     return (
-        <>
+        <div className="container-form-links">
             <h2>
                 {entity ? "Edit Link" : "Create Link"}
             </h2>
-            <form onSubmit={handleSubmit} className="form-links" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <form onSubmit={handleSubmit} className="form-links">
                 <DropdownComponent
                     id="type"
                     name="type"
@@ -48,7 +48,7 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
                     value={values.url}
                     onChange={handleChange}
                 />
-                <div className="actions" style={{ gap: "15px", marginTop: "10px", paddingBottom: 0 }}>
+                <div className="actions">
                     <ButtonComponent
                         onClick={handleCancel}
                         label={'Cancel'}
@@ -63,7 +63,7 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
                     />
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 
