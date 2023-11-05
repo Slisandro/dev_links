@@ -50,10 +50,9 @@ body
         height: max-content
         width: 99%
         margin: 0 auto
-/* container */
 
+/* layouts */
 /* home layout */
-/* container */
 .container-home-layout 
     width: calc(100% - 40px)
     display: flex
@@ -82,10 +81,15 @@ body
             justify-content: space-around
             background: #fff
             border-radius: 12px
-            padding: 15px 20%
+            padding: 15px 10%
+
+            @media (max-width: 700px)
+                flex-direction: column
+                gap: 25px
 
             @media (max-width: 800px)
-                display: none
+                padding: 15px 5%
+                
 
             .boarding 
                 width: 50%
@@ -95,8 +99,14 @@ body
                 flex-direction: column
                 gap: 20px
 
+                @media (max-width: 700px)
+                    width: 100%
+
                 h2
                     margin: 0
+                    
+                    @media (max-width: 700px)
+                        margin: 0 auto
 
                 a
                     text-decoration: none
@@ -106,7 +116,6 @@ body
                         width: 100%
 
 /* link layout */
-/* container */
 .container-link-layout
     width: calc(100% - 40px)
     display: flex
@@ -299,7 +308,7 @@ body
     
             .image-profile
                 width: calc(100% - 75px)
-                background-color: #FAFAFA
+                background-color: $gray-ternary
                 display: flex
                 align-items: center
                 justify-content: space-between
@@ -334,7 +343,7 @@ body
 
             .personal-data
                 width: calc(100% - 60px)
-                background-color: #FAFAFA
+                background-color: $gray-ternary
                 display: flex
                 flex-direction: column
                 gap: 10px
@@ -564,11 +573,190 @@ body
             a 
                 color: $blue-primary
 
+/* preview layout */
+.container-preview-layout
+    font-family: $font-instrument
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+    gap: 30px
+    width: 100%
+    height: 100vh
+    overflow-y: auto
+
+    .header 
+        width: 90%
+        display: flex
+        justify-content: flex-start
+        padding-left: 15px
+
+        button
+            width: max-content
+            display: flex
+            align-items: center
+            flex-direction: row
+            background-color: transparent
+            font-size: 16px
+            font-weight: 600
+            color: $gray-primary
+            padding: 11px 27px
+            border: none
+            gap: 10px
+
+            svg 
+                width: 14px
+                height: 14px
+                color: $gray-primary
+
+    .actions
+        display: flex
+        justify-content: center
+        width: 50%
+
+        @media(max-width: 700px)
+            flex-direction: column
+            align-items: center
+            justify-content: center
+
+        .textfield 
+            width: auto
+
+            input
+                width: 100%
+            
+            @media(max-width: 700px)
+                width: 100%
+
+        button
+            display: flex
+            align-items: center
+            gap: 8px
+            padding: 8px 10px
+            border-radius: 8px
+            width: max-content
+            border: none
+            background: transparent
+            color: $black
+            font-weight: 700
+            
+            @media(max-width: 700px)
+                width: max-content
+                margin: 0 auto
+
+            svg 
+                background: $blue-primary
+                color: $white
+                padding: 8px
+                border-radius: 50%
+
 // components
-
 /* navbar */ 
+.navbar 
+    display: flex
+    justify-content: space-between
+    width: calc(100% - 50px)
+    padding: 16px 24px
+    border-radius: 8px
+    background-color: $white
+    position: relative
 
+    .logo 
+        display: flex
+        align-items: center
+        gap: 10px
 
+    .actions 
+        display: flex
+        align-items: center
+        gap: 10px
+
+        @media (max-width: 800px) 
+            display: none
+
+        a 
+            text-decoration: none
+
+        button
+            width: max-content
+            color: $blue-primary
+            display: flex
+            align-items: center
+            flex-direction: row
+            background-color: transparent
+            font-size: 16px 
+            font-weight: 600
+            color: $gray-primary
+            padding: 11px 27px
+            border: none
+
+        .selected 
+            color: $blue-primary
+            background-color: $blue-ternary
+
+    .container-bars
+        width: max-content
+        display: none
+
+        @media(max-width: 800px)
+            display: block
+        
+        button
+            border: none
+            height: 100%
+            background: transparent
+            vertical-align: middle
+
+            svg 
+                width: 20px
+                height: 20px
+
+        .dropdown
+            position: absolute
+            top: 100%
+            left: 1em
+            border-radius: 8px
+            bottom: 0
+            background: $white
+            height: max-content
+            width: max-content
+            padding: 20px 30px 20px 20px
+            border: 1px solid $blue-ternary
+            display: flex
+            flex-direction: column
+            gap: 15px
+            margin-top: .5em
+
+            .option
+                display: flex
+                text-decoration: none
+                color: $black
+                gap: 15px
+                align-items: center
+                justify-content: flex-start
+                &:hover 
+                    zoom: 1.1
+                    color: $blue-primary
+                svg
+                    width: 18px
+                    height: 18px
+    
+    .preview 
+        width: max-content
+        font-size: 16px
+        padding-right: 20px
+
+        @media(max-width: 800px) 
+            padding-right: 0
+
+        a 
+            text-decoration: none
+
+        button
+            padding: 11px 27px
+
+/* general textfield */
 .textfield 
     border: 1px solid $gray-secondary
     border-radius: 4px
@@ -595,6 +783,10 @@ body
     &:focus 
         border-color: $blue-primary
     
+    &.error 
+        position: relative
+        border: 1px solid $red !important
+        max-width: 100%
 
     input 
         color: $black
@@ -613,11 +805,7 @@ body
         right: 5px
         left: auto
 
-.textfield.error 
-    position: relative
-    border: 1px solid $red !important
-    max-width: 100%
-
+/* general button */
 .button 
     display: flex
     width: 100%
@@ -642,17 +830,17 @@ body
         background-color: $blue-ternary
         opacity: 0.25
 
-.button.outline
-    background-color: transparent
-    color: $blue-primary
-    border: 1px solid $blue-primary
+    &.outline
+        background-color: transparent
+        color: $blue-primary
+        border: 1px solid $blue-primary
 
-    &:active
-        background-color: $blue-ternary
-        color: $blue-secondary
+        &:active
+            background-color: $blue-ternary
+            color: $blue-secondary
 
-    &:disabled 
-        opacity: 0.25
+        &:disabled 
+            opacity: 0.25
 
 .tab 
     display: flex
@@ -680,6 +868,7 @@ body
     svg 
         color: $gray-primary
 
+/* select */
 .dropdown 
     display: flex
     flex-direction: column
@@ -687,6 +876,28 @@ body
     gap: 8px
     width: 480px
     position: relative
+    max-width: 100%
+
+    &.error
+        position: relative
+        border: 1px solid $red !important
+        max-width: 100%
+        border-radius: 8px
+
+        .selected
+        border: none
+
+        .span-error
+            color: $red
+            margin-left: auto
+            height: 100%
+            font-size: small !important
+            position: absolute
+            right: 5px
+            left: auto
+            display: flex
+            align-items: center
+            margin-right: 40px 
 
     .selected 
         display: flex
@@ -744,27 +955,7 @@ body
             font-weight: 400
             line-height: 150%
 
-.dropdown.error 
-    position: relative
-    border: 1px solid $red !important
-    max-width: 100%
-    border-radius: 8px
-
-    .selected
-        border: none
-
-    .span-error
-        color: $red
-        margin-left: auto
-        height: 100%
-        font-size: small !important
-        position: absolute
-        right: 5px
-        left: auto
-        display: flex
-        align-items: center
-        margin-right: 40px 
-
+/* add/edit image profile */
 .image-upload 
     display: flex
     align-items: center
@@ -792,6 +983,7 @@ body
             margin: 0 auto
             position: absolute
             gap: 8px
+            background-color: rgba(0,0,0,.75)
             font-size: 16px
             font-weight: 600
             line-height: 150%
@@ -826,137 +1018,121 @@ body
             max-width: 90%
             max-height: 90%
 
-// Layouts
-
-.navbar 
-    display: flex
-    justify-content: space-between
-    width: calc(100% - 50px)
-    padding: 16px 24px
-    border-radius: 8px
-    background-color: $white
-
-    .logo 
-        display: flex
-        align-items: center
-        gap: 10px
-        padding-left: 20px
-
-    .actions 
-        display: flex
-        align-items: center
-        gap: 10px
-
-        button
-            width: max-content
-            color: $blue-primary
-            display: flex
-            align-items: center
-            flex-direction: row
-            background-color: transparent
-            font-size: 16px 
-            font-weight: 600
-            color: $gray-primary
-            padding: 11px 27px
-            border: none
-
-        .selected 
-            color: $blue-primary
-            background-color: $blue-ternary
-
-    .preview 
-        width: max-content
-        font-size: 16px
-        padding-right: 20px
-
-        button
-            padding: 11px 27px
-
-.list-container 
+/* draggable list */
+.list-container
     height: 300px
     max-height: 300px
     overflow-y: auto
 
     .item-container 
-        background-color: #fafafa
+        background-color: $gray-ternary
         padding: 15px
         width: calc(100% - 60px)
         border-radius: 12px
         height: auto
         margin: 10px
+        display: flex
 
-        .header-link
-            width: 100%
+        .content
             display: flex
-            justifyContent: space-between
-            align-items: center 
-            margin: 5px 0
-            
-            .detail-item 
-                width: 100%
-                display: flex
-                align-items: center
-                gap: 10px
+            align-items: center
+            gap: 20px
+            user-select: none
+        
+            .technology
+                display: none
 
-                .link-number
-                    color: #737373
-                    font-family: Instrument Sans
-                    font-size: 16px
-                    font-style: normal
-                    font-weight: 700
-                    line-height: 150%
-                    margin: 0
+                @media(max-width: 700px)
+                    display: block
+
+            .url 
+                @media(max-width: 700px)
+                    display: none
+
+        .actions
+            display: flex
+            gap: 10px
+            margin-left: auto
 
             button 
                 border: none
                 background-color: transparent
-                color: #737373
+                color: $gray-primary
                 font-family: Instrument Sans
                 font-size: 16px
+                width: max-content
+                height: max-content
+                padding: 8px
+                cursor: pointer
                 font-style: normal
                 font-weight: 400
                 line-height: 150%
                 margin: 0
-
 
     .container-input 
         width: 100%
         margin: 5px 0
         
         label
-            color: #737373
+            color: $gray-primary
             font-family: Instrument Sans
             font-size: 12px
             font-style: normal
             font-weight: 400
             line-height: 150%
 
-.modal-open
-  position: absolute
-  top: 0
-  left: 0
-  width: 100vw
-  height: 100vh
-  margin: 0 auto
-  background-color: rgba(0, 0, 0, 0.5)
-  display: flex
-  justify-content: center
-  align-items: center
-  z-index: 9999
+    .form-links
+        input 
+            width: 100%
 
-  &-content 
-    min-height: 42vh
-    background-color: white
-    padding: 20px
-    border-radius: 5px
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
-    max-height: 80vh
-    overflow-y: auto
-  
-  
-  &.hidden 
-    display: none
+/* modal */
+.modal
+    &.open
+        position: absolute
+        top: 0
+        left: 0
+        width: 100vw
+        height: 100vh
+        margin: 0 auto
+        background-color: rgba(0, 0, 0, 0.5)
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        z-index: 100
 
-.form-links 
-    input 
-        width: 100%
+        .content 
+            min-height: 42vh
+            background-color: white
+            padding: 20px
+            border-radius: 5px
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
+            max-height: 80vh
+            width: max-content
+            height: max-content
+
+            @media (max-width: 800px)
+                max-width: 80%
+  
+    &.close 
+        display: none
+
+/* form create/edit link */
+.container-form-links
+    display: flex
+    flex-direction: column
+    height: max-content
+    width: 100%
+
+
+    .form-links 
+        display: flex
+        flex-direction: column
+        gap: 1em
+
+
+        .actions
+            display: flex
+            margin: 0 10%
+            gap: 15px
+            margin-top: .5em
