@@ -9,6 +9,8 @@ import BarsIcon from '../icons/bars-icon';
 import XMarkIcon from '../icons/x-mark-icon';
 import { useSelector } from 'react-redux';
 import { UserProfileState } from '../redux/reducers/user-profile-reducers';
+import { logout } from '../redux/reducers/authentication';
+import { useDispatch } from 'react-redux';
 
 function NavBarComponent() {
     const { authentication } = useIsAuthenticatedHook();
@@ -72,8 +74,10 @@ const NavBarNotAuthenticated = () => {
 }
 
 const Bars = () => {
+    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleClick = () => setOpen(!open);
+    const handleLogout = () => dispatch(logout())
     return (
         <div className="container-bars">
             <button onClick={handleClick}>
@@ -88,6 +92,10 @@ const Bars = () => {
                     <NavLink to="/profile" className="option">
                         <ProfileIcon />
                         Profile
+                    </NavLink>
+                    <NavLink to="/" className="option" onClick={handleLogout}>
+                        <LinkIcon color="currentColor" />
+                        Logout
                     </NavLink>
                 </div>
             )}
