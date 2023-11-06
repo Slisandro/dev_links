@@ -1,14 +1,15 @@
 import { useDispatch } from 'react-redux';
+import technologies, { TechnologiesLabel } from '../constants/technologies-constants';
 import useFormikLinkHook from '../hooks/use-formik-link-hook';
 import { Link, setAddLink, setEditLink } from '../redux/reducers/links-reducers';
 import ButtonComponent from './button-component';
 import DropdownComponent from './dropdown-component';
 import TextFieldComponent from './textfield-component';
-import technologies, { TechnologiesLabel } from '../constants/technologies-constants';
 
 function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal: () => void }) {
     const dispatch = useDispatch();
-    const { values, errors, handleChange, setFieldValue } = useFormikLinkHook(entity);
+    const { values, errors, handleChange, setFieldValue, isDirty } = useFormikLinkHook(entity);
+    console.log({isDirty})
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (entity) {
@@ -59,7 +60,7 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
                         buttonType="submit"
                         label={'Save'}
                         type="default"
-                        disabled={!!errors.type || !!errors.url}
+                        disabled={!!errors.type || !!errors.url || !isDirty}
                     />
                 </div>
             </form>
