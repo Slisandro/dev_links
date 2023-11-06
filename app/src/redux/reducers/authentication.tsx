@@ -13,8 +13,7 @@ export interface UserLogged {
 const initialState: UserLogged = {
     user: null,
     token: null,
-    state: 'not authenticated',
-    // loading: false
+    state: 'not authenticated'
 };
 
 const userLoggedSlice = createSlice({
@@ -22,13 +21,16 @@ const userLoggedSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            // loading: false
+            localStorage.setItem('dev_links', action.payload.token);
             state.user = action.payload.user
             state.state = "authenticated"
             state.token = action.payload.token
         },
         logout: (state) => {
+            state.user = null
+            state.token = null
             state.state = "not authenticated"
+            localStorage.removeItem('dev_links');
         },
     },
 });
