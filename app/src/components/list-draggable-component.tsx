@@ -1,24 +1,35 @@
 import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-// import TextFieldComponent from './textfield-component';
 import { useDispatch, useSelector } from 'react-redux';
-import technologies, { TechnologiesId } from '../constants/technologies-constants';
+import technologies from '../constants/technologies-constants';
 import useCustomModal from '../hooks/use-modal-add-link-hook';
-import { setRemoveLink, setOrderLinks } from '../redux/reducers/links-reducers';
+import { Link, LinksState, setOrderLinks, setRemoveLink } from '../redux/reducers/links-reducers';
 import FormLinkComponent from './form-link-component';
 import ModalComponent from './modal-component';
 
-// React state to track order of items
-interface Item { type: TechnologiesId, url: string }
-
 function ListDraggableComponent() {
     const dispatch = useDispatch();
-    const links = useSelector((state: { links: Item[] }) => state.links);
-    const [itemList, setItemList] = React.useState<Item[]>(links);
+    const { links } = useSelector((state: { links: LinksState }) => state.links);
+    const [itemList, setItemList] = React.useState<Link[]>(links);
+    const [updated, setUpdated] = React.useState<Link[]>();
 
+    // Update list on mount 
     React.useEffect(() => {
-        setItemList(links)
+        if (links) {
+            setItemList(links)
+        }
+        return () => { }
     }, [links])
+
+
+    // Update order links (custom hook)
+    React.useEffect(() => {
+        if (updated) {
+            dispatch(setOrderLinks(updated))
+        }
+
+        return () => { }
+    }, [updated])
 
     // Function to update list on drop
     const handleDrop = (droppedItem: any) => {
@@ -30,8 +41,8 @@ function ListDraggableComponent() {
         // Add dropped item
         updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
         // Update State
+        setUpdated(updatedList)
         setItemList(updatedList);
-        dispatch(setOrderLinks(updatedList))
     };
 
     return (
@@ -56,7 +67,7 @@ function ListDraggableComponent() {
     )
 };
 
-const ListItem = ({ type, url, index }: { type: Item["type"], url: Item["url"], index: number }) => {
+const ListItem = ({ type, url, index }: { type: Link["type"], url: Link["url"], index: number }) => {
     const { modalState, toggleModal } = useCustomModal(false);
     const dispatch = useDispatch();
     const handleEdit = () => toggleModal();
