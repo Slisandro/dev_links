@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
+import { UserLogged } from '../redux/reducers/authentication';
 
 function useIsAuthenticatedHook() {
-    // @ts-expect-error
-    const { token } = useSelector(s => s.userLoggedReducers)
-    const [authentication, setAuthentication] = useState<boolean>(!!token);
+  const { token } = useSelector((s: { userLogged: UserLogged }) => s.userLogged)
+  const [authentication, setAuthentication] = useState<boolean>(!!token);
 
-    useEffect(() => {
-        if (token) {
-          setAuthentication(true);
-        } else {
-          setAuthentication(false);
-        }
-      }, [token]);
-
-    return {
-        authentication
+  useEffect(() => {
+    if (token) {
+      setAuthentication(true);
+    } else {
+      setAuthentication(false);
     }
+  }, [token]);
+
+  return {
+    authentication
+  }
 }
 
 export default useIsAuthenticatedHook;
