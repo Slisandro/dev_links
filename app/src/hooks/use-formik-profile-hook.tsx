@@ -6,18 +6,26 @@ interface Errors {
     username: string
 }
 
+interface InitialValues {
+    name: string
+    lastname: string
+    username: string
+    image: string
+}
+
 const initialErrors = {
     name: '',
     lastname: '',
     username: ''
 }
 
-function useFormikProfileHook(entity: Errors) {
+function useFormikProfileHook(entity: InitialValues) {
     const formik = useFormik({
         initialValues: {
             name: entity.name || '',
             lastname: entity.lastname || '',
-            username: entity.username || ''
+            username: entity.username || '',
+            image: entity.image || ""
         },
         initialErrors: initialErrors,
         async onSubmit() { },
@@ -47,7 +55,8 @@ function useFormikProfileHook(entity: Errors) {
         handleChange: formik.handleChange,
         values: formik.values,
         errors: formik.errors,
-        // initialValues: formik.initialValues,
+        isDirty: formik.dirty,
+        setFieldValue: formik.setFieldValue
     }
 }
 
