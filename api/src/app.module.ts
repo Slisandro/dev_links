@@ -18,7 +18,7 @@ import { Link } from './links/links.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot(process.env.NODE === "development" ? {
       type: 'postgres',
       host: 'localhost',
       port: 5432,
@@ -27,6 +27,15 @@ import { Link } from './links/links.entity';
       database: 'dev_links',
       entities: [Users, Profile, Link],
       synchronize: false,
+    }: {
+      url: process.env.DATABASE_URL,
+      type: 'postgres',
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true, // This for development
+      autoLoadEntities: true,
     }),
     UsersModule,
     AuthModule,

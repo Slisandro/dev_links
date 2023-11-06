@@ -6,6 +6,7 @@ async function bootstrap() {
   app.enableCors({
     origin: process.env.FRONTEND_URL
   })
-  await app.listen(process.env.PORT || 3000);
+  // @ts-expect-error
+  await app.listen(parseInt(process.env.PORT, '0.0.0.0') || 3000);
 }
 bootstrap();
