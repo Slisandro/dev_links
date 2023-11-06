@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { loginServicie } from '../servicies/authentication';
 import { login } from '../redux/reducers/authentication';
 import { setProfile } from '../redux/reducers/user-profile-reducers';
-import { setOrderLinks } from '../redux/reducers/links-reducers';
+import { setLinksOnLogin } from '../redux/reducers/links-reducers';
 import EyeIcon from '../icons/eye-icon';
 import EyeSlashIcon from '../icons/eye-slash-icon';
 import PasswordIcon from '../icons/password-icon';
@@ -16,19 +16,26 @@ function LoginLayout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [showPass, setShowPass] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const { handleChange, values, errors } = useFormikLoginHook();
 
-    React.useEffect(() => {}, [showPass])
+    React.useEffect(() => { }, [showPass]);
 
     const handleSubmit = async (e: any) => {
+        setLoading(true)
         e.preventDefault();
-        const response = await loginServicie(values);
+        const response = await loginServicie(values)
+            .finally(() => setLoading(false));
         if (response.token) {
+            localStorage.setItem("dev_links", JSON.stringify(response.token));
+            localStorage.setItem("dev_links_profile", JSON.stringify(response.profile));
+            localStorage.setItem("dev_links_user", JSON.stringify(response.user));
+            localStorage.setItem("dev_links_links", JSON.stringify(response.links.objectdata));
             dispatch(login({ ...response, state: "authenticated" }))
             dispatch(setProfile(response.profile))
-            dispatch(setOrderLinks(response.links.objectdata))
+            dispatch(setLinksOnLogin(response.links.objectdata))
             setTimeout(() => {
-                navigate("/")
+                navigate("/");
             }, 500);
         }
     }
@@ -89,9 +96,9 @@ function LoginLayout() {
                     </div>
 
                     <ButtonComponent
-                        disabled={!!errors.username || !!errors.password}
+                        disabled={!!errors.username || !!errors.password || loading}
                         buttonType={"submit"}
-                        label="Login"
+                        label={loading ? "Loading..." : "Login"}
                     />
 
                     <p className="register">Don't have account? <NavLink to="/register">Create account</NavLink></p>

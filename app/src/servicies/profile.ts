@@ -33,12 +33,14 @@ export const updateProfile = async (payload: Profile) => {
         username: payload.username
     };
 
+    console.log({ payload })
+
     if (payload.file?.size) {
         imageUrl = await updateImage(payload.file);
 
         return await axios.put('http://localhost:3000/profile/update', { ...fields, image: imageUrl ?? payload.image })
-        .then(r => r.data)
-        .catch(e => e.response);
+            .then(r => r.data)
+            .catch(e => e.response);
     };
 
     return await axios.put('http://localhost:3000/profile/update', { ...fields })

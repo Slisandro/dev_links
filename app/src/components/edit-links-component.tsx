@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import useCustomModal from '../hooks/use-modal-add-link-hook';
 import { UserLogged } from '../redux/reducers/authentication';
-import { Link } from "../redux/reducers/links-reducers";
+import { Link, LinksState } from "../redux/reducers/links-reducers";
 import { updateLinkService } from '../servicies/links';
 import ButtonComponent from "./button-component";
 import FormLinkComponent from './form-link-component';
@@ -10,8 +10,8 @@ import ListDraggableComponent from "./list-draggable-component";
 import ModalComponent from './modal-component';
 
 function EditLinksComponent() {
-  const links = useSelector((state: { links: Link[] }) => state.links);
-  const { user }: Partial<UserLogged> = useSelector((state: { userLoggedReducers: UserLogged }) => state.userLoggedReducers);
+  const { links, isDirty } = useSelector((state: { links: LinksState }) => state.links);
+  const { user }: Partial<UserLogged> = useSelector((state: { userLogged: UserLogged }) => state.userLogged);
   const { modalState, toggleModal } = useCustomModal(false);
   const handleModalAddLink = (e: any) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ function EditLinksComponent() {
       </form>
       <LinksContent links={links} />
       <div className="footer">
-        <ButtonComponent label="Save" type="outline" onClick={handleSave} disabled={false} />
+        <ButtonComponent label="Save" type="outline" onClick={handleSave} disabled={!isDirty} />
       </div>
     </div>
   )

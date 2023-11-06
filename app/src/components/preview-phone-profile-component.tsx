@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { UserProfileState } from "../redux/reducers/user-profile-reducers";
 import { useEffect } from 'react';
-import { Link } from '../redux/reducers/links-reducers';
+import { Link, LinksState } from '../redux/reducers/links-reducers';
 import PreviewLinksComponent from './preview-links-component';
 
 interface User {
@@ -13,8 +13,8 @@ interface User {
 }
 
 function PreviewPhoneProfileComponent() {
-    const { name, lastname, username, image }: Partial<User> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
-    const links = useSelector((state: { links: Link[] }) => state.links);
+    const { name, lastname, username, image }: Partial<User> = useSelector((state: { userProfile: UserProfileState }) => state.userProfile);
+    const { links } = useSelector((state: { links: LinksState }) => state.links);
 
     useEffect(() => { }, [name, lastname, username, image, links])
 

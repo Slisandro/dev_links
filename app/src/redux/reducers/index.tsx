@@ -4,8 +4,8 @@ import userLoggedReducers from "./authentication";
 import linksReducers from "./links-reducers";
 
 const rootReducer = combineReducers({
-    userProfileReducers,
-    userLoggedReducers,
+    userProfile: userProfileReducers,
+    userLogged: userLoggedReducers,
     links: linksReducers
 });
 

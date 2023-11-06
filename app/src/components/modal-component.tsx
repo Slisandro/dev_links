@@ -7,8 +7,8 @@ interface Props {
 
 function ModalComponent({ children, open }: Props) {
     return (
-        <div className={`modal-${open ? "open" : "close"}`}>
-            <div className="modal-open-content" style={{ height: "40%" }}>
+        <div className={`modal ${open ? "open" : "close"}`}>
+            <div className="content" style={{ height: "40%" }}>
                 {children}
             </div>
         </div>

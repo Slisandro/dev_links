@@ -26,12 +26,19 @@ export class ProfileService {
         return await this.userProfileRepository.findOne({ where: { userid: Number(userid) } });
     }
 
-    async update(p: Profile) {
+    async update(p: Partial<Profile>) {
+        const { userid, name, lastname, username } = p;
         // search profile by username 
         // change the profile, and update it
         const profile = await this.findOneByUserId(p.userid); // search by username but user change this field, produce error
 
-        const updatedProfile = await this.userProfileRepository.update(profile.id, { ...profile, ...p });
+        const updatedProfile = await this.userProfileRepository.update(profile.id, 
+            { 
+                ...profile,
+                name: name || profile.name,
+                lastname: lastname || profile.lastname,
+                username: username || profile.username 
+            });
 
         return updatedProfile
     }

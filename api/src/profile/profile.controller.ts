@@ -39,9 +39,8 @@ export class ProfileController {
     }
 
     @Put('update')
-    async update(@Body() profile: Profile) {
+    async update(@Body() profile: Partial<Profile>) {
         const userProfile = await this.userProfileService.findOneByUserId(profile.userid);
-        // console.oog
         if (!userProfile) {
             throw new BadRequestException("User not find");
         }
@@ -54,7 +53,7 @@ export class ProfileController {
     @Post('upload-image')
     @UseInterceptors(FileInterceptor('image'))
     async updateImage(@UploadedFile() image) {
-        console.log({ image })
+        // ad method remove image in the future
         const randomName = Array(32).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('');
         const filename = `${randomName}${image.originalname}`;
         const bucket = this.storage.bucket('roomies-2096e.appspot.com');

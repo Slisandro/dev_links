@@ -822,25 +822,26 @@ body
     font-weight: 600
     font-size: 16px
 
-    &:active
-        background-color: $blue-secondary
-        box-shadow: $shadow
-    
-    &:disabled 
-        background-color: $blue-ternary
-        opacity: 0.25
-
     &.outline
         background-color: transparent
         color: $blue-primary
         border: 1px solid $blue-primary
 
-        &:active
+        &:not(disabled):active
             background-color: $blue-ternary
             color: $blue-secondary
 
         &:disabled 
-            opacity: 0.25
+            border-color: $blue-ternary
+            color: $blue-ternary
+        
+    &.default
+        
+        &:not(disabled):active
+            background-color: $blue-secondary
+            box-shadow: $shadow
+        &:disabled 
+            background: $blue-ternary
 
 .tab 
     display: flex
@@ -885,7 +886,7 @@ body
         border-radius: 8px
 
         .selected
-        border: none
+            border: none
 
         .span-error
             color: $red
@@ -893,7 +894,7 @@ body
             height: 100%
             font-size: small !important
             position: absolute
-            right: 5px
+            right: 5px#633CFF
             left: auto
             display: flex
             align-items: center

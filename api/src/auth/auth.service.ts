@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { Users } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -10,11 +11,12 @@ export class AuthService {
 
     async sign(payload: Users) {
         const user = await this.usersService.findOne(payload.username);
-        const comparePassword = payload.password === user.password;
-
+        
         if(!user) {
             throw new BadRequestException("User does not exist");   
         }
+
+        const comparePassword = this.comparePassword(payload.password, user.password);
 
         if (!comparePassword) {
             throw new BadRequestException("Incorrect password");
@@ -29,6 +31,11 @@ export class AuthService {
         }
 
         return null;
+    }
+
+    async comparePassword (password: string, hash: string) {
+        const hashPass = bcrypt.hashSync(password, 10);
+        return hashPass === hash;
     }
 
     async validateUser(payload: Users) {

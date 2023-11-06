@@ -11,10 +11,10 @@ export interface UserLogged {
 }
 
 const initialState: UserLogged = {
-    user: null,
-    token: null,
-    state: 'not authenticated',
-    // loading: false
+    // @ts-expect-error
+    user: localStorage.getItem("dev_links_user") ? JSON.parse(localStorage.getItem("dev_links_user")) : null,
+    token: localStorage.getItem("dev_links") ?? null,
+    state: localStorage.getItem("dev_links") ? 'authenticated' : 'not authenticated'
 };
 
 const userLoggedSlice = createSlice({
@@ -22,13 +22,18 @@ const userLoggedSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            // loading: false
             state.user = action.payload.user
             state.state = "authenticated"
             state.token = action.payload.token
         },
         logout: (state) => {
+            state.user = null
+            state.token = null
             state.state = "not authenticated"
+            localStorage.removeItem('dev_links');
+            localStorage.removeItem('dev_links_user');
+            localStorage.removeItem('dev_links_profile');
+            localStorage.removeItem('links');
         },
     },
 });

@@ -5,16 +5,18 @@ import { updateProfile } from "../servicies/profile";
 import ButtonComponent from "./button-component";
 import ImageUploadComponent from "./image-upload-component";
 import TextFieldComponent from "./textfield-component";
+import { UserLogged } from "../redux/reducers/authentication";
 
 function EditPersonalDataComponent() {
     const dispatch = useDispatch();
-    const { name, lastname, username, image, file, id }: Partial<UserProfileState> = useSelector((state: { userProfileReducers: UserProfileState }) => state.userProfileReducers);
-    const { errors, values, handleChange } = useFormikProfileHook({ name, lastname, username });
+    const { name, lastname, username, image, file }: Partial<UserProfileState> = useSelector((state: { userProfile: UserProfileState }) => state.userProfile);
+    const { user } = useSelector((s: { userLogged: UserLogged } ) => s.userLogged);
+    const { errors, values, handleChange, isDirty, setFieldValue } = useFormikProfileHook({ name, lastname, username, image });
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         // @ts-ignore
-        const response = await updateProfile({ ...values, id, image, file });
+        const response = await updateProfile({ ...values, userid: user?.id, image, file });
         if (response) {
             dispatch(setName(response.name));
             dispatch(setLastname(response.lastname));
@@ -30,7 +32,7 @@ function EditPersonalDataComponent() {
             </div>
             <div className="image-profile">
                 <p>Profile picture</p>
-                <ImageUploadComponent />
+                <ImageUploadComponent image={values.image} setFieldValue={setFieldValue} />
             </div>
             <div className="personal-data">
                 <div className="container-input">
@@ -55,7 +57,6 @@ function EditPersonalDataComponent() {
                         value={values.lastname}
                         onChange={handleChange}
                         type={"default"}
-                    // icon={<svg width="0" height="0" viewBox="0 0 16 16" fill="none"></svg>}
                     />
                 </div>
                 <div className="container-input">
@@ -71,7 +72,7 @@ function EditPersonalDataComponent() {
                 </div>
             </div>
             <div className="footer">
-                <ButtonComponent buttonType="submit" label="Save" type="outline" disabled={!!errors.name || !!errors.lastname || !!errors.username} />
+                <ButtonComponent buttonType="submit" label="Save" type="outline" disabled={!!errors.name || !!errors.lastname || !!errors.username || !isDirty} />
             </div>
         </form>
     )

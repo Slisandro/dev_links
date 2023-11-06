@@ -1,11 +1,15 @@
-import { NavLink } from 'react-router-dom'
-import PreviewPhoneProfileComponent from '../components/preview-phone-profile-component'
-import LinkIcon from '../icons/link-icon'
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import PreviewPhoneProfileComponent from '../components/preview-phone-profile-component';
+import LinkIcon from '../icons/link-icon';
+import { UserLogged } from '../redux/reducers/authentication';
 
 function PreviewLayout() {
+    const { user } = useSelector((s: { userLogged: UserLogged }) => s.userLogged);
+    const URLPUBLIC = "https://localhost:5173/users/" + user?.id || "not found";
     const handleCopyLink = () => {
         const link = document.getElementById('link');
-        if (link) { 
+        if (link) {
             // @ts-ignore
             link.select();
             // @ts-ignore
@@ -26,7 +30,7 @@ function PreviewLayout() {
             </div>
             <div className="actions">
                 <div className="textfield">
-                    <input id="link" type="text" value="https://www.linkedin.com/in/username" disabled />
+                    <input id="link" type="text" value={URLPUBLIC} disabled />
                 </div>
                 <button onClick={handleCopyLink}>
                     <LinkIcon color="currentColor" />
