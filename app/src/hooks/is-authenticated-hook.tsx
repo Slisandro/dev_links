@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
-import { UserLogged } from '../redux/reducers/authentication';
+import { useEffect, useState } from 'react';
 
 function useIsAuthenticatedHook() {
-  const { token } = useSelector((s: { userLogged: UserLogged }) => s.userLogged)
+  const token = localStorage.getItem('dev_links');
   const [authentication, setAuthentication] = useState<boolean>(!!token);
 
   useEffect(() => {
