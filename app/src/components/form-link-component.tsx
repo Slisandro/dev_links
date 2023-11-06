@@ -9,7 +9,7 @@ import TextFieldComponent from './textfield-component';
 function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal: () => void }) {
     const dispatch = useDispatch();
     const { values, errors, handleChange, setFieldValue, isDirty } = useFormikLinkHook(entity);
-    console.log({isDirty})
+    
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (entity) {
