@@ -20,6 +20,7 @@ function TextFieldComponent({
     type = "default",
     inputType = "text",
     error,
+    onClickIcon = () => null,
     ...props
 }: TextField) {
     if (inputType === "password") {
@@ -28,7 +29,7 @@ function TextFieldComponent({
                 {prefix && prefix}
                 <input type={inputType} {...props} />
                 <span>{error}</span>
-                <button type="button" onClick={props?.onClickIcon}>
+                <button type="button" onClick={onClickIcon}>
                     {suffix && suffix}
                 </button>
             </div>
@@ -41,7 +42,7 @@ function TextFieldComponent({
             <input type={inputType} {...props} />
             <span>{error}</span>
             {suffix && (
-                <button type="button" onClick={props?.onClickIcon}>
+                <button type="button" onClick={onClickIcon}>
                     {suffix}
                 </button>
             )}
