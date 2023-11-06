@@ -8,6 +8,7 @@ import ProfileIcon from '../icons/profile-icon';
 import BarsIcon from '../icons/bars-icon';
 import XMarkIcon from '../icons/x-mark-icon';
 import { useSelector } from 'react-redux';
+import { UserProfileState } from '../redux/reducers/user-profile-reducers';
 
 function NavBarComponent() {
     const { authentication } = useIsAuthenticatedHook();
@@ -25,7 +26,7 @@ function NavBarComponent() {
 
 const NavBarAuthentication = () => {
     const location = useLocation();
-    const { name, lastname } = useSelector((state: any) => state.userProfileReducers); 
+    const { name, lastname } = useSelector((state: { userProfile: UserProfileState }) => state.userProfile);
 
     return (
         <>
@@ -52,7 +53,7 @@ const NavBarAuthentication = () => {
             </div>
             <div className="preview">
                 <NavLink to="/preview" style={{ textDecoration: "none" }}>
-                    <ButtonComponent type="outline" label="Preview" disabled={!name || !lastname}/>
+                    <ButtonComponent type="outline" label="Preview" disabled={!name || !lastname} />
                 </NavLink>
             </div>
         </>
