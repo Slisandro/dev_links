@@ -13,15 +13,17 @@ function RegisterLayout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [loading, setLoading] = React.useState(false);
     const [showPass, setShowPass] = React.useState(false);
     const [showRepeatPass, setShowRepeatPass] = React.useState(false);
     const { values, handleChange, errors, ...formik } = useFormikRegisterHook();
 
-    React.useEffect(() => {}, [showPass, showRepeatPass])
+    React.useEffect(() => { }, [showPass, showRepeatPass])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const response = await registerServicie({ username: values.username, password: values.password });
+        const response = await registerServicie({ username: values.username, password: values.password })
+            .finally(() => setLoading(false));
         if (response.token) {
             dispatch(login({ ...response, state: "authenticated" }));
             setTimeout(() => {
@@ -110,7 +112,7 @@ function RegisterLayout() {
                         />
                     </div>
 
-                    <ButtonComponent disabled={!!errors.username || !!errors.password || !!errors.repeatPassword} label="Create new account" buttonType="submit" />
+                    <ButtonComponent disabled={!!errors.username || !!errors.password || !!errors.repeatPassword || loading} label={loading ? "Loading..." : "Create new account"} buttonType="submit" />
 
                     <p className="login">Already have an account? <NavLink to="/login">Login</NavLink></p>
                 </form>
