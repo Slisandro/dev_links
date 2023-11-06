@@ -12,7 +12,8 @@ export interface LinksState {
 }
 
 const initialState: LinksState = {
-    links: [],
+    // @ts-expect-error
+    links: localStorage.getItem("dev_links_links") ? JSON.parse(localStorage.getItem("dev_links_links")) as Link[] : [],
     isDirty: false
 };
 
