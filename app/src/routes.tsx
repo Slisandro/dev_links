@@ -18,18 +18,16 @@ const PrivateRoute = () => {
 function AllRoutes() {
     return (
         <Routes>
-            <Route path='/'
-                element={<HomeLayout />}
-            />
+            <Route path='/' element={<HomeLayout />} />
             <Route path='/' element={<PrivateRoute />}>
-                <Route path='/home' element={<HomeLayout />}/>
+                <Route path='/home' element={<HomeLayout />} />
                 <Route path='/links' element={<EditLinksLayout />} />
                 <Route path='/profile' element={<EditPersonalDataLayout />} />
                 <Route path='/preview' element={<PreviewLayout />} />
             </Route>
             <Route path='/register' element={<RegisterLayout />} />
             <Route path='/login' element={<LoginLayout />} />
-            <Route path='/profile/:id' element={<ProfilePublicLayout />} />
+            <Route path='/users/:id' element={<ProfilePublicLayout />} />
         </Routes>
     );
 }
