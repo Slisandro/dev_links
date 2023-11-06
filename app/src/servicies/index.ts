@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://dev-links-backend.heroku.app',
+  baseURL: import.meta.env.VITE_APP_BACKEND_URL,
 });
 
 export default api;
