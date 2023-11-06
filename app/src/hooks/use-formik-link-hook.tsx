@@ -39,7 +39,8 @@ function useFormikLinkHook(entity?: Link) {
         handleChange: formik.handleChange,
         values: formik.values,
         errors: formik.errors,
-        setFieldValue: formik.setFieldValue
+        setFieldValue: formik.setFieldValue,
+        isDirty: formik.dirty,
     }
 }
 
