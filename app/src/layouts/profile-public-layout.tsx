@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import PreviewLinksComponent from '../components/preview-links-component';
+import useProfilePublicHook from '../hooks/get-profile-public-hook';
 import { Link } from '../redux/reducers/links-reducers';
 
 function ProfilePublicLayout() {
@@ -26,32 +26,7 @@ function ProfilePublicLayout() {
 }
 
 const ProfilePublicComponent = ({ id }: { id: string }) => {
-    const [profile, setProfile] = React.useState
-        <{
-            name: string,
-            lastname: string,
-            username: string,
-            image: string,
-            links: Link[]
-        }>({
-            name: "",
-            lastname: "",
-            username: "",
-            image: "",
-            links: [
-                { type: "", url: "" },
-                { type: "", url: "" },
-                { type: "", url: "" },
-                { type: "", url: "" },
-                { type: "", url: "" }
-            ]
-        });
-
-    React.useEffect(() => {
-        axios.get(`http://localhost:3000/profile/${id}`)
-            .then(r => setProfile(r.data))
-            .catch(() => null)
-    }, [id])
+    const { profile } = useProfilePublicHook(id);
 
     if (!profile) {
         <>Not found</>
