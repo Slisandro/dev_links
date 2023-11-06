@@ -5,13 +5,6 @@ interface User {
     password: string;
 }
 
-const otherFields = (p: User) => ({
-    ...p,
-    name: '',
-    lastname: '',
-    image: ''
-})
-
 export const registerServicie = async (payload: User) =>
     await axios.post('http://localhost:3000/auth/register', payload)
         .then(r => r.data)
