@@ -10,15 +10,18 @@ export interface UserProfileState {
     file: File;
 }
 
-const initialState: UserProfileState = {
-    name: "",
-    lastname: "",
-    username: "",
-    image: "",
-    id: "",
-    userid: null,
-    file: new File([], "")
-};
+const initialState: UserProfileState =
+    localStorage.getItem("dev_links_profile")
+        // @ts-expect-error
+        ? JSON.parse(localStorage.getItem("dev_links_profile")) as UserProfileState : ({
+            name: "",
+            lastname: "",
+            username: "",
+            image: "",
+            id: "",
+            userid: null,
+            file: new File([], "")
+        });
 
 const userProfileSlice = createSlice({
     name: "userProfile",
@@ -48,11 +51,11 @@ const userProfileSlice = createSlice({
     },
 });
 
-export const { 
-    setName, 
-    setUsername, 
-    setLastname, 
-    setImage, 
-    setProfile 
+export const {
+    setName,
+    setUsername,
+    setLastname,
+    setImage,
+    setProfile
 } = userProfileSlice.actions;
 export default userProfileSlice.reducer;
