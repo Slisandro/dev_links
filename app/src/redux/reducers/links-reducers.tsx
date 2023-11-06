@@ -6,28 +6,49 @@ export interface Link {
     type: TechnologiesId | ""
 }
 
-const initialState: Link[] = [];
+export interface LinksState {
+    links: Link[];
+    isDirty: boolean;
+}
+
+const initialState: LinksState = {
+    links: [],
+    isDirty: false
+};
 
 const linksSlice = createSlice({
     name: "links",
     initialState,
     reducers: {
-        setAddLink: (state, action) => {
-            state.push(action.payload);
-            state = state
+        setLinksOnLogin: (state, action) => {
+            state.isDirty = false;
+            state.links = action.payload
         },
-        setRemoveLink: (state, action) => state = state.filter((link) => link.type !== action.payload),
+        setAddLink: (state, action) => {
+            state.isDirty = true;
+            state.links.push(action.payload);
+            state.links = state.links
+        },
+        setRemoveLink: (state, action) => {
+            state.isDirty = true;
+            state.links = state.links.filter((link) => link.type !== action.payload)
+        },
         setEditLink: (state, action) => {
             const { type, url } = action.payload;
-            const index = state.findIndex((link) => link.type === type);
-            state[index].url = url
-            state = state
+            state.isDirty = true;
+            const index = state.links.findIndex((link) => link.type === type);
+            state.links[index].url = url;
+            state = state;
         },
-        setOrderLinks: (state, action) => state = action.payload
+        setOrderLinks: (state, action) => {
+            state.isDirty = true;
+            state.links = action.payload;
+        }
     },
 });
 
 export const {
+    setLinksOnLogin,
     setAddLink,
     setRemoveLink,
     setEditLink,
