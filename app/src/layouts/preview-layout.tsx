@@ -7,14 +7,14 @@ import { toast } from 'react-toastify';
 
 function PreviewLayout() {
     const { user } = useSelector((s: { userLogged: UserLogged }) => s.userLogged);
-    const URLPUBLIC = " /users/" + user?.id || "not found";
+    const URLPUBLIC = "/users/" + user?.id || "not found";
     const handleCopyLink = () => {
         const link = document.getElementById('link');
         if (link) {
             // @ts-ignore
             link.select();
             // @ts-ignore
-            navigator.clipboard.writeText(link.value);
+            navigator.clipboard.writeText("https://devlinks-sl.vercel.app" + link.value);
             toast("Link copied successfully!", {
                 position: toast.POSITION.BOTTOM_LEFT,
                 className: "toast-message"
