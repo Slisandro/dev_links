@@ -33,7 +33,7 @@ const userLoggedSlice = createSlice({
             localStorage.removeItem('dev_links');
             localStorage.removeItem('dev_links_user');
             localStorage.removeItem('dev_links_profile');
-            localStorage.removeItem('links');
+            localStorage.removeItem('dev_links_links');
         },
     },
 });
