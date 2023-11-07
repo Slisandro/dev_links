@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import PreviewLinksComponent from '../components/preview-links-component';
 import useProfilePublicHook from '../hooks/get-profile-public-hook';
 import { Link } from '../redux/reducers/links-reducers';
+import { NavLink } from 'react-router-dom';
+import DevLinksIcon from '../icons/dev-links-icon';
 
 function ProfilePublicLayout() {
     const params = useParams();
@@ -19,8 +21,30 @@ function ProfilePublicLayout() {
     }
 
     return (
-        <section>
+        <section
+            style={{ 
+                height: "100vh", 
+                width: "100vw", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: "25px"
+            }}
+        >
+            <NavLink to="/">
+                <DevLinksIcon />
+            </NavLink>
             <ProfilePublicComponent id={id} />
+            <NavLink 
+                to="/" 
+                style={{ 
+                    marginLeft: "auto",
+                    paddingRight: "30px"
+                }}
+            >
+                Try now
+            </NavLink>
         </section>
     )
 }
