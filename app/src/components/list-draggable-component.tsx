@@ -86,11 +86,12 @@ const ListItem = ({ type, url, index }: { type: Link["type"], url: Link["url"], 
                         ref={provided.innerRef}
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
-                        style={{ display: "flex", userSelect: "none", ...provided.draggableProps.style }}
+                        style={{ ...provided.draggableProps.style }}
                     >
-                        <div style={{ display: "flex", alignItems: "center", gap: "20px", userSelect: "none" }}>
+                        <div className="content">
                             {technologies.find(t => t.id === type)?.icon}
-                            {url}
+                            <span className="url">{url}</span>
+                            <span className="label">{technologies.find(t => t.id === type)?.label}</span>
                         </div>
                         <div style={{ display: "flex", gap: "10px", marginLeft: "auto" }}>
                             <button
