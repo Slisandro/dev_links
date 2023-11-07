@@ -34,7 +34,7 @@ export class AuthService {
     }
 
     async comparePassword(password: string, hash: string) {
-        return await bcrypt.compareSync(password, hash);
+        return bcrypt.compareSync(password, hash);
     }
 
     async validateUser(payload: Users) {

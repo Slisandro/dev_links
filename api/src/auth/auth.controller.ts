@@ -36,8 +36,8 @@ export class AuthController {
             throw new BadRequestException("User already exists");
         }
 
-        if(!newUser.username || !newUser.password) {
-            throw new BadRequestException("Username and password are required"); 
+        if (!newUser.username || !newUser.password) {
+            throw new BadRequestException("Username and password are required");
         }
 
         const user = await this.userService.create(newUser);
@@ -60,7 +60,7 @@ export class AuthController {
         }
 
         if (user) {
-            const responseAuth = await this.authService.sign(user);
+            const responseAuth = await this.authService.sign({ ...user, password: payload.password });
             const responseProfile = await this.userProfileService.findOneByUserId(user.id);
             const responseLinks = await this.linkService.findOneByUserId(user.id);
 
