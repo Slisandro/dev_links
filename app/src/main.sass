@@ -23,6 +23,9 @@ body
     font-family: $font-instrument
     background-color: $gray-ternary
 
+button 
+    cursor: pointer
+    
 /* scrollbar */
 ::-webkit-scrollbar 
   width: 10px /* Ancho de la barra de desplazamiento */
@@ -746,6 +749,8 @@ body
         width: max-content
         font-size: 16px
         padding-right: 20px
+        display: flex
+        gap: 15px
 
         @media(max-width: 800px) 
             padding-right: 0
@@ -755,6 +760,10 @@ body
 
         button
             padding: 11px 27px
+
+            svg
+                width: 28px
+                height: 28px
 
 /* general textfield */
 .textfield 
