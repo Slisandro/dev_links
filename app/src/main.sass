@@ -1124,16 +1124,33 @@ body
     flex-direction: column
     height: max-content
     width: 100%
+        .textfield 
+            width: 60%
+            padding: 8px
 
 
     .form-links 
         display: flex
         flex-direction: column
         gap: 1em
+        
+        button
+            width: max-content
 
+    .form-links 
+        display: flex
+        flex-direction: column
+        gap: 1em
 
         .actions
             display: flex
             margin: 0 10%
             gap: 15px
             margin-top: .5em
+
+.toast-message
+    background: $blue-primary
+    color: #fff
+    font-family: $font-instrument
+    width: max-content
+    padding: 10px

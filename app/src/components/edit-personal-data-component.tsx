@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 import useFormikProfileHook from "../hooks/use-formik-profile-hook";
-import { UserProfileState, setUsername, setLastname, setName } from "../redux/reducers/user-profile-reducers";
+import { UserLogged } from "../redux/reducers/authentication";
+import { UserProfileState, setLastname, setName, setUsername } from "../redux/reducers/user-profile-reducers";
 import { updateProfile } from "../servicies/profile";
 import ButtonComponent from "./button-component";
 import ImageUploadComponent from "./image-upload-component";
 import TextFieldComponent from "./textfield-component";
-import { UserLogged } from "../redux/reducers/authentication";
 
 function EditPersonalDataComponent() {
     const dispatch = useDispatch();
@@ -18,6 +19,10 @@ function EditPersonalDataComponent() {
         // @ts-ignore
         const response = await updateProfile({ ...values, userid: user?.id, image, file });
         if (response) {
+            toast("Profile updated successfully!", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            }) 
             dispatch(setName(response.name));
             dispatch(setLastname(response.lastname));
             dispatch(setUsername(response.username));

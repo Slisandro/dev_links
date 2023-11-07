@@ -12,11 +12,11 @@ export class AuthService {
     async sign(payload: Users) {
         const user = await this.usersService.findOne(payload.username);
         
-        if(!user) {
-            throw new BadRequestException("User does not exist");   
+        if (!user) {
+            throw new BadRequestException("User does not exist");
         }
 
-        const comparePassword = this.comparePassword(payload.password, user.password);
+        const comparePassword = await this.comparePassword(payload.password, user.password);
 
         if (!comparePassword) {
             throw new BadRequestException("Incorrect password");
@@ -33,9 +33,8 @@ export class AuthService {
         return null;
     }
 
-    async comparePassword (password: string, hash: string) {
-        const hashPass = bcrypt.hashSync(password, 10);
-        return hashPass === hash;
+    async comparePassword(password: string, hash: string) {
+        return await bcrypt.compareSync(password, hash);
     }
 
     async validateUser(payload: Users) {

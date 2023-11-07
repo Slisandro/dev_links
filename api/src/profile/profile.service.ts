@@ -22,22 +22,23 @@ export class ProfileService {
         return await this.userProfileRepository.save(userProfile);
     }
 
-    async findOneByUserId(userid: string|number) {
+    async findOneByUserId(userid: string | number) {
         return await this.userProfileRepository.findOne({ where: { userid: Number(userid) } });
     }
 
     async update(p: Partial<Profile>) {
-        const { userid, name, lastname, username } = p;
+        const { userid, name, lastname, username, image } = p;
         // search profile by username 
         // change the profile, and update it
-        const profile = await this.findOneByUserId(p.userid); // search by username but user change this field, produce error
+        const profile = await this.findOneByUserId(userid); // search by username but user change this field, produce error
 
-        const updatedProfile = await this.userProfileRepository.update(profile.id, 
-            { 
+        const updatedProfile = await this.userProfileRepository.update(profile.id,
+            {
                 ...profile,
                 name: name || profile.name,
                 lastname: lastname || profile.lastname,
-                username: username || profile.username 
+                username: username || profile.username,
+                image: image || profile.image
             });
 
         return updatedProfile

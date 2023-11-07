@@ -5,11 +5,11 @@ import { Link, setAddLink, setEditLink } from '../redux/reducers/links-reducers'
 import ButtonComponent from './button-component';
 import DropdownComponent from './dropdown-component';
 import TextFieldComponent from './textfield-component';
+import { toast } from 'react-toastify';
 
 function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal: () => void }) {
     const dispatch = useDispatch();
     const { values, errors, handleChange, setFieldValue, isDirty } = useFormikLinkHook(entity);
-    
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (entity) {
@@ -17,6 +17,10 @@ function FormLinkComponent({ entity, toggleModal }: { entity?: Link, toggleModal
         } else {
             dispatch(setAddLink(values))
         }
+        toast("Link saved successfully!", {
+            position: toast.POSITION.BOTTOM_LEFT,
+            className: "toast-message"
+        })
         toggleModal();
     };
 

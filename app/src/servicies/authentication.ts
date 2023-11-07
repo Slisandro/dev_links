@@ -1,4 +1,5 @@
 import api from "./index";
+import { toast } from 'react-toastify';
 
 interface User {
     username: string;
@@ -7,10 +8,34 @@ interface User {
 
 export const registerServicie = async (payload: User) =>
     await api.post('/auth/register', payload)
-        .then(r => r.data)
-        .catch(e => e.response);
+        .then(r => {
+            toast("Register success", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            })
+            return r.data;
+        })
+        .catch(e => {
+            toast(e.response.data.message ?? "Register error", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            })
+            return e.response
+        });
 
 export const loginServicie = async (payload: User) =>
-    await api.post('http://localhost:3000/auth/login', payload)
-        .then(r => r.data)
-        .catch(e => e.response);
+    await api.post('/auth/login', payload)
+        .then(r => {
+            toast("Login success", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            })
+            return r.data;
+        })
+        .catch(e => {
+            toast(e.response.data.message ?? "Login error", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            })
+            return e.response
+        });

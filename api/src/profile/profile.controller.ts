@@ -1,9 +1,9 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { ProfileService } from '../profile/profile.service';
-import { Profile } from './profile.entity';
 import { Storage } from '@google-cloud/storage';
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { LinkService } from 'src/links/links.service';
+import { ProfileService } from '../profile/profile.service';
+import { Profile } from './profile.entity';
 
 @Controller('profile')
 export class ProfileController {

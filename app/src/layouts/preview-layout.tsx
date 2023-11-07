@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom';
 import PreviewPhoneProfileComponent from '../components/preview-phone-profile-component';
 import LinkIcon from '../icons/link-icon';
 import { UserLogged } from '../redux/reducers/authentication';
+import { toast } from 'react-toastify';
 
 function PreviewLayout() {
     const { user } = useSelector((s: { userLogged: UserLogged }) => s.userLogged);
-    const URLPUBLIC = "https://localhost:5173/users/" + user?.id || "not found";
+    const URLPUBLIC = " /users/" + user?.id || "not found";
     const handleCopyLink = () => {
         const link = document.getElementById('link');
         if (link) {
@@ -14,6 +15,10 @@ function PreviewLayout() {
             link.select();
             // @ts-ignore
             navigator.clipboard.writeText(link.value);
+            toast("Link copied successfully!", {
+                position: toast.POSITION.BOTTOM_LEFT,
+                className: "toast-message"
+            })
         }
     }
     return (
