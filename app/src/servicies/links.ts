@@ -1,12 +1,12 @@
-import axios from 'axios';
+import api from './index';
 
 export const getLinkService = async (id: number) =>
-    await axios.get('http://localhost:3000/links/' + id)
+    await api.get('/links/' + id)
         .then(r => r.data)
         .catch(e => e.response);
 
 export const updateLinkService = async (id: number, links: { type: string, url: string }[]) =>
-    await axios.post('http://localhost:3000/links/update', {
+    await api.post('/links/update', {
         userid: id,
         objectdata: links
     })
