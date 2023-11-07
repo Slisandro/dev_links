@@ -25,9 +25,9 @@ function AllRoutes() {
                 <Route path='/profile' element={<EditPersonalDataLayout />} />
                 <Route path='/preview' element={<PreviewLayout />} />
             </Route>
+            <Route path='/users/:id' element={<ProfilePublicLayout />} />
             <Route path='/register' element={<RegisterLayout />} />
             <Route path='/login' element={<LoginLayout />} />
-            <Route path='/users/:id' element={<ProfilePublicLayout />} />
         </Routes>
     );
 }
