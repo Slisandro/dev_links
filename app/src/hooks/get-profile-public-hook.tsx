@@ -26,7 +26,7 @@ function useProfilePublicHook(id: string) {
 
     React.useEffect(() => {
         if (id) {
-            axios.get(`http://localhost:3000/profile/${id}`)
+            axios.get(import.meta.env.VITE_APP_BACKEND_URL + `/profile/${id}`)
                 .then(r => setProfile(r.data))
                 .catch(() => null)
         }
