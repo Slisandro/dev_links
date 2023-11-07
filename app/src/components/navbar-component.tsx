@@ -27,8 +27,14 @@ function NavBarComponent() {
 };
 
 const NavBarAuthentication = () => {
+    const dispatch = useDispatch();
     const location = useLocation();
     const { name, lastname } = useSelector((state: { userProfile: UserProfileState }) => state.userProfile);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        window.location.href = "/login";
+    };
 
     return (
         <>
@@ -57,13 +63,17 @@ const NavBarAuthentication = () => {
                 <NavLink to="/preview" style={{ textDecoration: "none" }}>
                     <ButtonComponent type="outline" label="Preview" disabled={!name || !lastname} />
                 </NavLink>
+                <button style={{ padding: 5, border: "none", backgroundColor: "transparent" }} onClick={handleLogout}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" color="#737373" />
+                    </svg>
+                </button>
             </div>
         </>
     )
 };
 
 const NavBarNotAuthenticated = () => {
-
     return (
         <div className="preview">
             <NavLink to="/login">
@@ -77,7 +87,11 @@ const Bars = () => {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleClick = () => setOpen(!open);
-    const handleLogout = () => dispatch(logout())
+    const handleLogout = () => {
+        dispatch(logout())
+        window.location.href = "/login";
+    }
+
     return (
         <div className="container-bars">
             <button onClick={handleClick}>
