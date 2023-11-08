@@ -22,29 +22,31 @@ function ProfilePublicLayout() {
 
     return (
         <section
-            style={{ 
-                height: "100vh", 
-                width: "100vw", 
-                display: "flex", 
-                alignItems: "center", 
+            style={{
+                height: "100vh",
+                width: "100vw",
+                display: "flex",
+                alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
-                gap: "25px"
+                gap: "35px"
             }}
         >
-            <NavLink to="/">
-                <DevLinksIcon />
-            </NavLink>
+            <div style={{ width: "80%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <NavLink to="/" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <DevLinksIcon />
+                </NavLink>
+                <NavLink
+                    to="/"
+                    style={{
+                        marginLeft: "auto",
+                        paddingRight: "30px"
+                    }}
+                >
+                    Try now
+                </NavLink>
+            </div>
             <ProfilePublicComponent id={id} />
-            <NavLink 
-                to="/" 
-                style={{ 
-                    marginLeft: "auto",
-                    paddingRight: "30px"
-                }}
-            >
-                Try now
-            </NavLink>
         </section>
     )
 }
@@ -65,8 +67,8 @@ const ProfilePublicComponent = ({ id }: { id: string }) => {
                     <circle cx="153.5" cy="112" r="48" />
                 </clipPath>
             </defs>
-            <Image href={profile.image} />
-            <Name name={profile.name} lastname={profile.lastname} />
+            <Image href={profile?.image} />
+            <Name name={profile?.name} lastname={profile?.lastname} />
             <Email username={profile?.username} />
             <rect
                 x="30"
@@ -76,7 +78,7 @@ const ProfilePublicComponent = ({ id }: { id: string }) => {
                 rx="4"
                 fill="#EEEEEE"
             />
-            <Links links={profile.links} />
+            <Links links={profile?.links} />
             <defs>
                 <clipPath id="clip0_26_969">
                     <rect width="16" height="16" fill="white" transform="translate(51 292)" />
@@ -178,7 +180,7 @@ const Links = ({ links }: { links: Link[] }) => {
     return (
         <>
             {links.map(({ type, url }, index) => (
-                <PreviewLinksComponent type={type} url={url} key={type} {...POSITION[index]} />
+                <PreviewLinksComponent type={type} url={url} key={index} {...POSITION[index]} />
             ))}
         </>
     )
