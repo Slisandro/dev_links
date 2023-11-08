@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React from 'react';
 import { Link } from '../redux/reducers/links-reducers';
+import { getPublicProfile } from '../servicies/public-profile';
 
 function useProfilePublicHook(id: string) {
     const [profile, setProfile] = React.useState
@@ -26,7 +26,7 @@ function useProfilePublicHook(id: string) {
 
     React.useEffect(() => {
         if (id) {
-            axios.get(import.meta.env.VITE_APP_BACKEND_URL + `/profile/${id}`)
+            getPublicProfile(id)
                 .then(r => setProfile(r.data))
                 .catch(() => null)
         }
