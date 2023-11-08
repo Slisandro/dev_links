@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '../redux/reducers/links-reducers';
 import { getPublicProfile } from '../servicies/public-profile';
+import { toast } from 'react-toastify';
 
 function useProfilePublicHook(id: string) {
     const [profile, setProfile] = React.useState
@@ -27,8 +28,18 @@ function useProfilePublicHook(id: string) {
     React.useEffect(() => {
         if (id) {
             getPublicProfile(id)
-                .then(r => setProfile(r.data))
-                .catch(() => null)
+                .then(response => {
+                    if (response) {
+                        setProfile(response)
+                    } else {
+                        toast("Error getting profile", {
+                            className: "toast-message"
+                        })
+                    }
+                })
+                .catch(() => {
+                    console.log("ENTRA")
+                })
         }
     }, [id]);
 
