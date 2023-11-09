@@ -37,7 +37,7 @@
 </p>
 
 </div>
-
+  
 ## About The Project
 [![Product Name Screen Shot][product-screenshot]](https://devlinks-sl.vercel.app)
 
@@ -98,13 +98,8 @@ npm install pnpm@latest -g
 
 ### Installation
 
-  
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._  
-
-1. Get a free API Key at [https://www.weatherapi.com/](https://www.weatherapi.com/)
-
-2. Clone the repo
+1. Clone the repo
 
 ```sh
 
@@ -112,7 +107,7 @@ git clone https://github.com/Slisandro/dev_links.git
 
 ```
 
-3. Install NPM packages 
+2. Install NPM packages 
 
 ```sh
 
@@ -122,7 +117,7 @@ pnpm install
 
 ```
 
-4. Repeat in /api folder
+3. Repeat in /api folder
 
 ```js
 
