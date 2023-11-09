@@ -6,7 +6,7 @@ interface ButtonProps {
     type?: 'default' | 'outline'
     buttonType?: "button" | "submit" | "reset"
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>
-    className?: string
+    className?: string 
     onClick?: (e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => void
 }
 
