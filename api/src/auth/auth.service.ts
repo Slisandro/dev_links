@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { Users } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
-import * as bcrypt from 'bcrypt';
+import { compareSync } from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +34,7 @@ export class AuthService {
     }
 
     async comparePassword(password: string, hash: string) {
-        return bcrypt.compareSync(password, hash);
+        return compareSync(password, hash);
     }
 
     async validateUser(payload: Users) {
