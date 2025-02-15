@@ -29,7 +29,15 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.POSTGRES_DATABASE,
       // entities: [Users, Profile, Link],
       synchronize: true,
-      autoLoadEntities: true
+      autoLoadEntities: true,
+      ssl: process.env.SSL === 'true',
+      extra: {
+        ssl:
+          process.env.POSTGRES_SSL === 'true'
+            ? {
+              rejectUnauthorized: false
+            } : null
+      }
     }),
     UsersModule,
     AuthModule,
