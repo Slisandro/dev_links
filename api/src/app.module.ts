@@ -8,34 +8,28 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 
 import { UsersModule } from './users/users.module';
-import { Users } from './users/users.entity';
 
 import { ProfileModule } from './profile/profile.module';
-import { Profile } from './profile/profile.entity';
 
 import { LinkModule } from './links/links.module';
-import { Link } from './links/links.entity';
+
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(process.env.NODE === "development" ? {
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'admin',
-      database: 'dev_links',
-      entities: [Users, Profile, Link],
-      synchronize: false,
-    }: {
-      url: process.env.DATABASE_URL,
-      type: 'postgres',
-      ssl: {
-        rejectUnauthorized: false,
-      },
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true, // This for development
-      autoLoadEntities: true,
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USERNAME,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      // entities: [Users, Profile, Link],
+      synchronize: true,
+      autoLoadEntities: true
     }),
     UsersModule,
     AuthModule,
