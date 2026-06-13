@@ -1,5 +1,5 @@
 {
-    "url": "postgres://uamsbj7d42kjhj:pc4f6a231d72ebce2a014178c67c450d6fc3593374dff1929f6098619edb0e22c@ec2-3-220-9-204.compute-1.amazonaws.com:5432/d111mtpog1hfam",
+    "url": "postgresql://devlink_database_user:NiVpQsYLHxfwGyUnQhvEmelknNrNOVWM@dpg-d8mptortqb8s73cdq2og-a/devlink_database",
     "ssl": { 
         "rejectUnauthorized": false
     }
