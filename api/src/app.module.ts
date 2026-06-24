@@ -30,13 +30,11 @@ import { ConfigModule } from '@nestjs/config';
       // entities: [Users, Profile, Link],
       synchronize: true,
       autoLoadEntities: true,
-      ssl: process.env.SSL === 'true',
+      ssl: true,
       extra: {
-        ssl:
-          process.env.POSTGRES_SSL === 'true'
-            ? {
-              rejectUnauthorized: false
-            } : null
+        ssl: {
+          rejectUnauthorized: false
+        }
       }
     }),
     UsersModule,
